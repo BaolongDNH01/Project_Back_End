@@ -2,17 +2,65 @@ package com.c0220h1_project.model;
 
 
 import javax.persistence.*;
-import java.util.List;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.util.Set;
 
-@Entity
+@Entity(name = "_subject")
 public class Subject {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int subjectId;
-    String subject_name;
-    @OneToMany(mappedBy = "subject")
-    private List<Question> questions;
-    @OneToMany(mappedBy = "subject")
-    private List<Test> tests;
+    Integer subjectId;
 
+    @NotEmpty
+    @Size(min = 1, max = 255)
+    String subjectName;
+
+    @OneToMany(mappedBy="subject")
+    private Set<Test> tests;
+
+    @OneToMany(mappedBy="subject")
+    private Set<Question> questions;
+
+    public Subject() {
+    }
+
+    public Subject(@NotEmpty @Size(min = 1, max = 255) String subjectName, Set<Test> tests, Set<Question> questions) {
+        this.subjectName = subjectName;
+        this.tests = tests;
+        this.questions = questions;
+    }
+
+    public Set<Test> getTests() {
+        return tests;
+    }
+
+    public void setTests(Set<Test> tests) {
+        this.tests = tests;
+    }
+
+    public Set<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
+    }
+
+    public Integer getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(Integer subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
 }

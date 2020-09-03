@@ -11,5 +11,4 @@ public class Test {
     @ManyToOne
     @JoinColumn(name = "subject_id")
     private Subject subject;
-
 }

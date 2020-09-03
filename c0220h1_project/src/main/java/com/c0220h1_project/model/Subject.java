@@ -1,6 +1,8 @@
 package com.c0220h1_project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -19,7 +21,7 @@ public class Subject {
 
     @OneToMany(mappedBy="subject")
     private Set<Test> tests;
-
+    @JsonIgnore
     @OneToMany(mappedBy="subject")
     private Set<Question> questions;
 

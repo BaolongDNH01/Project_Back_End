@@ -8,8 +8,7 @@ import java.util.Set;
 @Entity
 public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer questionId;
+    private String questionId;
 
     @NotEmpty
     @Size(min = 1, max = 255)
@@ -33,7 +32,8 @@ public class Question {
     public Question() {
     }
 
-    public Question(@NotEmpty @Size(min = 1, max = 255) String question, @NotEmpty @Size(min = 1, max = 255) String answer, @NotEmpty @Size(min = 1, max = 255) String rightAnswer, Set<Test> tests, Subject subject) {
+    public Question(String questionId, @NotEmpty @Size(min = 1, max = 255) String question, @NotEmpty @Size(min = 1, max = 255) String answer, @NotEmpty @Size(min = 1, max = 255) String rightAnswer, Set<Test> tests, Subject subject) {
+        this.questionId = questionId;
         this.question = question;
         this.answer = answer;
         this.rightAnswer = rightAnswer;
@@ -41,11 +41,11 @@ public class Question {
         this.subject = subject;
     }
 
-    public Integer getQuestionId() {
+    public String getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(Integer questionId) {
+    public void setQuestionId(String questionId) {
         this.questionId = questionId;
     }
 

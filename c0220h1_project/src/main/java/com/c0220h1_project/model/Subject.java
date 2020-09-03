@@ -1,5 +1,6 @@
 package com.c0220h1_project.model;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;

@@ -32,7 +32,8 @@ public class Question {
     public Question() {
     }
 
-    public Question(@NotEmpty @Size(min = 1, max = 255) String question, @NotEmpty @Size(min = 1, max = 255) String answer, @NotEmpty @Size(min = 1, max = 255) String rightAnswer, Set<Test> tests, Subject subject) {
+    public Question(String questionId, @NotEmpty @Size(min = 1, max = 255) String question, @NotEmpty @Size(min = 1, max = 255) String answer, @NotEmpty @Size(min = 1, max = 255) String rightAnswer, Set<Test> tests, Subject subject) {
+        this.questionId = questionId;
         this.question = question;
         this.answer = answer;
         this.rightAnswer = rightAnswer;

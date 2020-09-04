@@ -39,11 +39,11 @@ public class QuestionResControl {
     }
     @PatchMapping(value = "/editQuestion/{id}")
     public ResponseEntity<Question> updateQuestion(@PathVariable("id") String id, @RequestBody Question question){
-        Question question1 = questionService.findById(id);
-        question1.setQuestionId(question.getQuestionId());
-        question1.setQuestion(question.getQuestion());
-        question1.setAnswer(question.getAnswer());
-        question1.setCorrectAnswer(question.getCorrectAnswer());
+        Question questionById = questionService.findById(id);
+        questionById.setQuestionId(question.getQuestionId());
+        questionById.setQuestion(question.getQuestion());
+        questionById.setAnswer(question.getAnswer());
+        questionById.setCorrectAnswer(question.getCorrectAnswer());
         questionService.save(question);
         return new ResponseEntity<>(question,HttpStatus.OK);
     }

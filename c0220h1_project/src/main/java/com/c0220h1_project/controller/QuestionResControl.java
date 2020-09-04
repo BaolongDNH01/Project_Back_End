@@ -36,7 +36,7 @@ public class QuestionResControl {
     public void createQuestion(@RequestBody Question question){
         questionService.save(question);
     }
-    @PatchMapping(value = "/eidtQuestion/{id}")
+    @PatchMapping(value = "/editQuestion/{id}")
     public ResponseEntity<Question> updateQuestion(@PathVariable("id") String id, @RequestBody Question question){
         Question question1 = questionService.findById(id);
         question1.setQuestionId(question.getQuestionId());

@@ -2,6 +2,7 @@ package com.c0220h1_project.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -45,6 +46,10 @@ public class User {
         joinColumns = @JoinColumn(name="user_id"),
         inverseJoinColumns = @JoinColumn(name="role_id")
     )
+
+    @OneToMany(mappedBy = "user")
+    private List<Exam> examList;
+
     private Set<Role> roles;
 
     public User() {
@@ -143,5 +148,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Exam> getExamList() {
+        return examList;
+    }
+
+    public void setExamList(List<Exam> examList) {
+        this.examList = examList;
     }
 }

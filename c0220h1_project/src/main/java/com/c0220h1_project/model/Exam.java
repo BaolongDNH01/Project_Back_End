@@ -1,4 +1,4 @@
-package com.c0220h1_project.model.exam;
+package com.c0220h1_project.model;
 
 import javax.persistence.*;
 

@@ -5,7 +5,12 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="C:\Users\Alex\Downloads\CodeGym\C0220H1---Duong-Tran-Bao-Long\c0220h1_project" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+          </set>
+        </option>
         <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>

@@ -1,4 +1,4 @@
-package com.c0220h1_project.model.exam;
+package com.c0220h1_project.model;
 
 import javax.persistence.*;
 
@@ -14,10 +14,10 @@ public class Exam {
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
 //    private _User user;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "test_id")
-//    private _Test test;
+
+    @ManyToOne
+    @JoinColumn(name = "test_id")
+    private Test test;
 
     public Exam() {
     }
@@ -59,5 +59,13 @@ public class Exam {
 
     public void setAnswer(String[] answer) {
         this.answer = answer;
+    }
+
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
     }
 }

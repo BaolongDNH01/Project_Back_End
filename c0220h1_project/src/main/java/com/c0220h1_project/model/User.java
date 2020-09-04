@@ -37,6 +37,8 @@ public class User {
     @NotBlank
     private String phoneNumber;
 
+    private String avatar;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable (
         name ="user_role",
@@ -48,22 +50,26 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String fullName, String email, String address, String phoneNumber) {
+    public User(String username, String password, String fullName, String email, String address, String phoneNumber,
+                String avatar) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.avatar = avatar;
     }
 
-    public User(String username, String password, String fullName, String email, String address, String phoneNumber, Set<Role> roles) {
+    public User(String username, String password, String fullName, String email, String address, String phoneNumber,
+                String avatar, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.avatar = avatar;
         this.roles = roles;
     }
 
@@ -121,6 +127,14 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Set<Role> getRoles() {

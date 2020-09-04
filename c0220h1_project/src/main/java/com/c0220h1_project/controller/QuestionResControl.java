@@ -32,7 +32,7 @@ public class QuestionResControl {
        questionService.remove(id);
     }
 
-    @PostMapping(value = "/createQuestion")
+    @PostMapping(value = "/addQuestion")
     public void createQuestion(@RequestBody Question question){
         questionService.save(question);
     }

@@ -14,10 +14,10 @@ public class Exam {
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
 //    private _User user;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "test_id")
-//    private _Test test;
+
+    @ManyToOne
+    @JoinColumn(name = "test_id")
+    private Test test;
 
     public Exam() {
     }

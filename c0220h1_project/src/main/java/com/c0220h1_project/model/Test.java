@@ -3,6 +3,7 @@ package com.c0220h1_project.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,9 @@ public class Test {
     @ManyToOne
     @JoinColumn(name="_subject_id", nullable=false)
     private Subject subject;
+
+    @OneToMany(mappedBy = "test")
+    private List<Exam> examList;
 
     public Test() {
     }
@@ -86,5 +90,13 @@ public class Test {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public List<Exam> getExamList() {
+        return examList;
+    }
+
+    public void setExamList(List<Exam> examList) {
+        this.examList = examList;
     }
 }

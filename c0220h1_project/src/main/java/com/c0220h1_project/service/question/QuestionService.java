@@ -8,4 +8,5 @@ public interface QuestionService {
     List<Question> findAll();
     Question findById(String questionId);
     void save(Question question);
+    void remove(String id);
 }

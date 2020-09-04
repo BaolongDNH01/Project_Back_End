@@ -25,4 +25,9 @@ public class QuestionServiceImpl implements QuestionService {
     public void save(Question question) {
         questionRepository.save(question);
     }
+
+    @Override
+    public void remove(String id) {
+        questionRepository.deleteById(id);
+    }
 }

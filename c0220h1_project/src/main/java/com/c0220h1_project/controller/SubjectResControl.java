@@ -18,17 +18,19 @@ public class SubjectResControl {
     private SubjectService subjectService;
 
     @GetMapping("/getAllSubject")
-    public ResponseEntity<List<Subject>> getAllSubject(){
+    public ResponseEntity<List<Subject>> getAllSubject() {
         return new ResponseEntity<>(subjectService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/getSubjectById/{id}")
-    public ResponseEntity<Subject> getSubjectById(@PathVariable Integer id){
+    public ResponseEntity<Subject> getSubjectById(@PathVariable Integer id) {
         return new ResponseEntity<>(subjectService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping("/addSubject")
-    public void addSubject(@RequestBody Subject subject){
+    public void addSubject(@RequestBody Subject subject) {
         subjectService.save(subject);
+
     }
+
 }

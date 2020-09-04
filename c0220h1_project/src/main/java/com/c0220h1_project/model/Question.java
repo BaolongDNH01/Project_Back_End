@@ -20,7 +20,7 @@ public class Question {
 
     @NotEmpty
     @Size(min = 1, max = 255)
-    private String rightAnswer;
+    private String correctAnswer;
 
     @ManyToMany
     Set<Test> tests;
@@ -32,11 +32,11 @@ public class Question {
     public Question() {
     }
 
-    public Question(String questionId, @NotEmpty @Size(min = 1, max = 255) String question, @NotEmpty @Size(min = 1, max = 255) String answer, @NotEmpty @Size(min = 1, max = 255) String rightAnswer, Set<Test> tests, Subject subject) {
+    public Question(String questionId, @NotEmpty @Size(min = 1, max = 255) String question, @NotEmpty @Size(min = 1, max = 255) String answer, @NotEmpty @Size(min = 1, max = 255) String correctAnswer, Set<Test> tests, Subject subject) {
         this.questionId = questionId;
         this.question = question;
         this.answer = answer;
-        this.rightAnswer = rightAnswer;
+        this.correctAnswer = correctAnswer;
         this.tests = tests;
         this.subject = subject;
     }
@@ -65,12 +65,12 @@ public class Question {
         this.answer = answer;
     }
 
-    public String getRightAnswer() {
-        return rightAnswer;
+    public String getCorrectAnswer() {
+        return correctAnswer;
     }
 
-    public void setRightAnswer(String rightAnswer) {
-        this.rightAnswer = rightAnswer;
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 
     public Set<Test> getTests() {

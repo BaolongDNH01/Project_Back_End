@@ -9,4 +9,5 @@ public interface SubjectService {
     List<Subject> findAll();
     Subject findById(int subjectId);
     void save(Subject subject);
+    void remove(Integer id);
 }

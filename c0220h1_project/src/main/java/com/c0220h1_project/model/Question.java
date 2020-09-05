@@ -23,10 +23,11 @@ public class Question {
     private String rightAnswer;
 
     @ManyToMany
+    private
     Set<Test> tests;
 
     @ManyToOne
-    @JoinColumn(name = "_subject_id", nullable = false)
+    @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
     public Question() {

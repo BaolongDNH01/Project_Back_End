@@ -1,5 +1,8 @@
 package com.c0220h1_project.model;
 
+import com.c0220h1_project.model.question.Question;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -29,7 +32,7 @@ public class Test {
     @ManyToOne
     @JoinColumn(name="_subject_id", nullable=false)
     private Subject subject;
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "test")
     private List<Exam> examList;
 

@@ -1,5 +1,7 @@
-package com.c0220h1_project.model;
+package com.c0220h1_project.model.test;
 
+import com.c0220h1_project.model.Exam;
+import com.c0220h1_project.model.Subject;
 import com.c0220h1_project.model.question.Question;
 
 import javax.persistence.*;

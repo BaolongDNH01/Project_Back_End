@@ -1,5 +1,8 @@
 package com.c0220h1_project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -22,10 +25,12 @@ public class Question {
     @Size(min = 1, max = 255)
     private String rightAnswer;
 
+    @JsonBackReference
     @ManyToMany
     private
     Set<Test> tests;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;

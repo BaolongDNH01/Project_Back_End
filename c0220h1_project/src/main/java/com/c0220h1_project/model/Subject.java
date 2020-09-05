@@ -1,7 +1,9 @@
 package com.c0220h1_project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -19,9 +21,11 @@ public class Subject {
     @Size(min = 1, max = 255)
     String subjectName;
 
+    @JsonManagedReference
     @OneToMany(mappedBy="subject")
     private Set<Test> tests;
 
+    @JsonBackReference
     @OneToMany(mappedBy="subject")
     private Set<Question> questions;
 

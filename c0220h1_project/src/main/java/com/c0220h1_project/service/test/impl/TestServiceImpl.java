@@ -1,6 +1,6 @@
 package com.c0220h1_project.service.test.impl;
 
-import com.c0220h1_project.model.Test;
+import com.c0220h1_project.model.test.Test;
 import com.c0220h1_project.repository.TestRepository;
 import com.c0220h1_project.service.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;

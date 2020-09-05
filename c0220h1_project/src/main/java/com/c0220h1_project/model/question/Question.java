@@ -1,4 +1,7 @@
-package com.c0220h1_project.model;
+package com.c0220h1_project.model.question;
+import com.c0220h1_project.model.Subject;
+import com.c0220h1_project.model.test.Test;
+
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -33,6 +36,7 @@ public class Question {
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
+
     private Subject subject;
 
     public Question() {

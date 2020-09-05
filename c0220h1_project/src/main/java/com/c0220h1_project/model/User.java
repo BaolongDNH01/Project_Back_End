@@ -11,6 +11,7 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"username"}),
     }
 )
+
 public class User {
 
     @Id
@@ -55,6 +56,7 @@ public class User {
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
+
     }
 
     public User(String username, String password, String fullName, String email, String address, String phoneNumber, Set<Role> roles) {

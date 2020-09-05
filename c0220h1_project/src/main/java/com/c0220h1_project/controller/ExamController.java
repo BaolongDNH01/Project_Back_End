@@ -1,9 +1,8 @@
 package com.c0220h1_project.controller;
 
 import com.c0220h1_project.model.Exam;
-import com.c0220h1_project.model.UserPoint;
 import com.c0220h1_project.service.exam.ExamService;
-import org.omg.CORBA.Any;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

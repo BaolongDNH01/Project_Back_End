@@ -1,6 +1,6 @@
 package com.c0220h1_project.service.question.impl;
 
-import com.c0220h1_project.model.Question;
+import com.c0220h1_project.model.question.Question;
 import com.c0220h1_project.repository.QuestionRepository;
 import com.c0220h1_project.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;

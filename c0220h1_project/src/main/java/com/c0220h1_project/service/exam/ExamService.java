@@ -9,4 +9,5 @@ public interface ExamService {
     Exam findById(Integer examId);
     void save(Exam exam);
     void delete(Integer examId);
+    List<Object> findUserPointDesc();
 }

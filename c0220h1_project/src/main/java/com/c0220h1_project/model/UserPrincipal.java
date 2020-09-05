@@ -14,7 +14,7 @@ public class UserPrincipal implements UserDetails, Serializable {
 
     private static final Long serialVersionUID = 1L;
 
-    private Long id;
+    private Integer id;
 
     private String username;
 
@@ -36,7 +36,7 @@ public class UserPrincipal implements UserDetails, Serializable {
     public UserPrincipal() {
     }
 
-    public UserPrincipal(Long id, String username, String password, String fullName, String email, String address,
+    public UserPrincipal(Integer id, String username, String password, String fullName, String email, String address,
                          String phoneNumber, String avatar, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
@@ -105,11 +105,11 @@ public class UserPrincipal implements UserDetails, Serializable {
         return serialVersionUID;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

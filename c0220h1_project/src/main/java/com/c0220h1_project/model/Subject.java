@@ -21,7 +21,7 @@ public class Subject {
 
     @OneToMany(mappedBy="subject")
     private Set<Test> tests;
-    @JsonIgnore
+
     @OneToMany(mappedBy="subject")
     private Set<Question> questions;
 

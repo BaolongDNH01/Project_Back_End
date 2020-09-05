@@ -1,4 +1,7 @@
-package com.c0220h1_project.model;
+package com.c0220h1_project.model.question;
+
+import com.c0220h1_project.model.Subject;
+import com.c0220h1_project.model.Test;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;

@@ -1,6 +1,6 @@
 package com.c0220h1_project.service.test;
 
-import com.c0220h1_project.model.Test;
+import com.c0220h1_project.model.test.Test;
 
 import java.util.List;
 

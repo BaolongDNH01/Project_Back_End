@@ -2,6 +2,7 @@ package com.c0220h1_project.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,7 +17,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="user_id")
-    private Long id;
+    private Integer id;
 
     @NotBlank
     private String username;
@@ -37,6 +38,8 @@ public class User {
     @NotBlank
     private String phoneNumber;
 
+    private String avatar;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable (
         name ="user_role",
@@ -45,33 +48,42 @@ public class User {
     )
     private Set<Role> roles;
 
+    @OneToMany(mappedBy = "user")
+    private List<Exam> examList;
+
+
+
     public User() {
     }
 
-    public User(String username, String password, String fullName, String email, String address, String phoneNumber) {
+    public User(String username, String password, String fullName, String email, String address, String phoneNumber,
+                String avatar) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.avatar = avatar;
     }
 
-    public User(String username, String password, String fullName, String email, String address, String phoneNumber, Set<Role> roles) {
+    public User(String username, String password, String fullName, String email, String address, String phoneNumber,
+                String avatar, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.avatar = avatar;
         this.roles = roles;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -123,11 +135,27 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Exam> getExamList() {
+        return examList;
+    }
+
+    public void setExamList(List<Exam> examList) {
+        this.examList = examList;
     }
 }

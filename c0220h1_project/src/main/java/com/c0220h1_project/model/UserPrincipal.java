@@ -14,7 +14,7 @@ public class UserPrincipal implements UserDetails, Serializable {
 
     private static final Long serialVersionUID = 1L;
 
-    private Long id;
+    private Integer id;
 
     private String username;
 
@@ -29,12 +29,15 @@ public class UserPrincipal implements UserDetails, Serializable {
 
     private String phoneNumber;
 
+    private String avatar;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserPrincipal() {
     }
 
-    public UserPrincipal(Long id, String username, String password, String fullName, String email, String address, String phoneNumber, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Integer id, String username, String password, String fullName, String email, String address,
+                         String phoneNumber, String avatar, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -42,6 +45,7 @@ public class UserPrincipal implements UserDetails, Serializable {
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.avatar = avatar;
         this.authorities = authorities;
     }
 
@@ -57,6 +61,7 @@ public class UserPrincipal implements UserDetails, Serializable {
             user.getEmail(),
             user.getAddress(),
             user.getPhoneNumber(),
+            user.getAvatar(),
             authorities
         );
     }
@@ -100,11 +105,11 @@ public class UserPrincipal implements UserDetails, Serializable {
         return serialVersionUID;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -146,6 +151,14 @@ public class UserPrincipal implements UserDetails, Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {

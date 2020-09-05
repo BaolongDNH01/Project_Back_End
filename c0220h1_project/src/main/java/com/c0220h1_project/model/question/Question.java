@@ -1,4 +1,7 @@
-package com.c0220h1_project.model;
+package com.c0220h1_project.model.question;
+import com.c0220h1_project.model.Subject;
+import com.c0220h1_project.model.test.Test;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -23,10 +26,12 @@ public class Question {
     private String rightAnswer;
 
     @ManyToMany
+    private
     Set<Test> tests;
 
     @ManyToOne
-    @JoinColumn(name = "_subject_id", nullable = false)
+    @JoinColumn(name = "subject_id", nullable = false)
+
     private Subject subject;
 
     public Question() {

@@ -17,7 +17,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="user_id")
-    private Long id;
+    private Integer id;
 
     @NotBlank
     private String username;
@@ -79,11 +79,11 @@ public class User {
         this.roles = roles;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

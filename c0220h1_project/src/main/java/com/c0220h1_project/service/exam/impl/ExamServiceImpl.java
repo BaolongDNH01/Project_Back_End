@@ -1,6 +1,7 @@
 package com.c0220h1_project.service.exam.impl;
 
 import com.c0220h1_project.model.Exam;
+import com.c0220h1_project.model.UserPoint;
 import com.c0220h1_project.repository.ExamRepository;
 import com.c0220h1_project.service.exam.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,10 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public void delete(Integer examId) {
         examRepository.deleteById(examId);
+    }
+
+    @Override
+    public List<Object> findUserPointDesc() {
+        return examRepository.findUserPointDesc();
     }
 }

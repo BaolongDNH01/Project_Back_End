@@ -28,21 +28,17 @@ public class QuestionResControl {
     }
 
     @RequestMapping(value = "/create-question", method = RequestMethod.POST)
-    public ResponseEntity<Void> createQuestion(@RequestBody Question question, UriComponentsBuilder builder){
-        questionService.save(question);
+    public ResponseEntity<Void> createQuestion(@RequestBody QuestionDto questionDto, UriComponentsBuilder builder){
+        questionService.save(questionDto);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/question/{id}").buildAndExpand(question.getQuestionId()).toUri());
+        headers.setLocation(builder.path("/question/{id}").buildAndExpand(questionDto.getQuestionId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
     @RequestMapping(value = "/update-question/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> updateQuestion(@PathVariable String id, @RequestBody Question questionForm){
+    public ResponseEntity<Void> updateQuestion(@PathVariable String id, @RequestBody QuestionDto questionDtoForm){
         Question question = questionService.findByIdQuestion(id);
-        question.setQuestion(questionForm.getQuestion());
-        question.setAnswer(questionForm.getAnswer());
-        question.setRightAnswer(questionForm.getRightAnswer());
-        question.setSubject(questionForm.getSubject());
-        question.setTests(questionForm.getTests());
-        questionService.save(question);
+        questionDtoForm.setQuestionId(question.getQuestionId());
+        questionService.save(questionDtoForm);
         return new ResponseEntity<>( HttpStatus.OK);
     }
     @RequestMapping(value = "/delete-question/{id}")

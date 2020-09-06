@@ -1,4 +1,4 @@
-package com.c0220h1_project.model.message.response;
+package com.c0220h1_project.model.login_msg.response;
 
 import org.springframework.security.core.GrantedAuthority;
 

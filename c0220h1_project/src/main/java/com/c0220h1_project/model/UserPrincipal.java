@@ -1,5 +1,4 @@
 package com.c0220h1_project.model;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -165,3 +164,4 @@ public class UserPrincipal implements UserDetails, Serializable {
         this.authorities = authorities;
     }
 }
+

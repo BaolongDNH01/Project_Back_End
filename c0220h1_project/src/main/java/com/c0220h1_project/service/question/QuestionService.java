@@ -9,6 +9,6 @@ public interface QuestionService {
     List<QuestionDto> findAll();
     QuestionDto findById(String questionId);
     Question findByIdQuestion(String questionId);
-    void save(Question question);
+    void save(QuestionDto questionDto);
     void delete(String questionId);
 }

@@ -1,4 +1,4 @@
-package com.c0220h1_project.model.message.request;
+package com.c0220h1_project.model.login_msg.request;
 
 import javax.validation.constraints.NotBlank;
 

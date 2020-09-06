@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
+        user.setUser_password(encoder.encode(user.getUser_password()));
         userRepository.save(user);
         return true;
     }

@@ -12,7 +12,7 @@ public class Exam {
     private String examDate;
     private Double mark;
     private String[] answer;
-
+    private Double times;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -24,11 +24,20 @@ public class Exam {
     public Exam() {
     }
 
-    public Exam(Integer examId, String examDate, Double mark, String[] answer) {
+    public Exam(Integer examId, String examDate, Double mark, String[] answer, Double times) {
         this.examId = examId;
         this.examDate = examDate;
         this.mark = mark;
         this.answer = answer;
+        this.times = times;
+    }
+
+    public Double getTimes() {
+        return times;
+    }
+
+    public void setTimes(Double times) {
+        this.times = times;
     }
 
     public Integer getExamId() {

@@ -20,14 +20,18 @@ public class Test {
 
     @NotEmpty
     @Size(min = 1, max = 50)
+    private
     String testCode;
     @NotEmpty
     @Size(min = 1, max = 50)
+    private
     String testName;
     @NotEmpty
     @Size(min = 1, max = 50)
+    private
     String grade;
     @ManyToMany
+    private
     Set<Question> questions;
 
     @ManyToOne

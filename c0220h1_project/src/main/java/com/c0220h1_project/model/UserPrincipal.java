@@ -56,7 +56,7 @@ public class UserPrincipal implements UserDetails, Serializable {
         return new UserPrincipal(
             user.getId(),
             user.getUsername(),
-            user.getPassword(),
+            user.getUser_password(),
             user.getFullName(),
             user.getEmail(),
             user.getAddress(),

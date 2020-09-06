@@ -3,6 +3,7 @@ package com.c0220h1_project.service.user;
 import com.c0220h1_project.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 public interface UserService {
     boolean save(User user);

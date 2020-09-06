@@ -40,4 +40,8 @@ public class UserRestController {
             userService.deleteUser(id);
             return new ResponseEntity(null,HttpStatus.OK);
     }
+    @GetMapping("/new-user")
+    public ResponseEntity<User> findUserNew(){
+        return new ResponseEntity<>(userService.findTopByOrderByIdDesc(), HttpStatus.OK);
+    }
 }

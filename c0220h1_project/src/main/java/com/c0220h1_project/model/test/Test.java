@@ -5,6 +5,7 @@ import com.c0220h1_project.model.question.Question;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -32,6 +33,7 @@ public class Test {
     @Size(min = 1, max = 50)
     private
     String grade;
+
 
     @JsonBackReference
     @ManyToMany

@@ -34,12 +34,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private String getJwtFromRequest(HttpServletRequest request) {
         String headerRequest = request.getHeader("Authorization");
-        if(headerRequest != null && headerRequest.startsWith("Bearer ")) {
-            System.out.println("Exact JWT");
-            System.out.println("Prefix header: " + PREFIX_TOKEN);
-            return headerRequest.replace("Bearer ", "");
+        if(headerRequest != null && headerRequest.startsWith(PREFIX_TOKEN)) {
+
+            return headerRequest.replace(PREFIX_TOKEN, "");
         }
-        System.out.println("Wrong JWT");
         return null;
     }
 

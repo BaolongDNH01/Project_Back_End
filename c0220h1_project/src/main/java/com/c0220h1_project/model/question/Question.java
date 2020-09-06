@@ -40,7 +40,7 @@ public class Question {
     @Size(min = 1, max = 255)
     private String rightAnswer;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToMany
     private
     Set<Test> tests;

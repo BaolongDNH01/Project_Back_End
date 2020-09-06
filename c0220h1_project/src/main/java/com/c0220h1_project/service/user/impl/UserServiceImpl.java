@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,14 @@ public class UserServiceImpl implements UserService {
 ////        user.setPassword(encoder.encode(user.getPassword()));
 ////        userRepository.save(user);
 ////        return true;
+
+        if (findByUsername(user.getUsername())) {
+            return false;
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setUser_password(encoder.encode(user.getUser_password()));
+        userRepository.save(user);
+
         return true;
     }
 
@@ -39,5 +48,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Integer id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User findTopByOrderByIdDesc() {
+        return userRepository.findTopByOrderByIdDesc();
     }
 }

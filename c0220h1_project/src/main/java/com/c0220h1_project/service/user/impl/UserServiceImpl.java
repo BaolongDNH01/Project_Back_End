@@ -16,13 +16,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean save(User user) {
-//        if (findByUsername(user.getUsername())) {
-////            return false;
-////        }
-////        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-////        user.setPassword(encoder.encode(user.getPassword()));
-////        userRepository.save(user);
-////        return true;
+        if (findByUsername(user.getUsername())) {
+            return false;
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setUser_password(encoder.encode(user.getUser_password()));
+        userRepository.save(user);
         return true;
     }
 
@@ -39,5 +38,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Integer id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User findTopByOrderByIdDesc() {
+        return userRepository.findTopByOrderByIdDesc();
     }
 }

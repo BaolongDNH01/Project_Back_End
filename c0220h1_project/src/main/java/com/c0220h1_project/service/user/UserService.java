@@ -10,5 +10,6 @@ public interface UserService {
     Boolean findByUsername (String Username);
     Page<User> findAll (Pageable pageable);
     void deleteUser (Integer id);
+    User findTopByOrderByIdDesc();
 
 }

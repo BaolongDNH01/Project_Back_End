@@ -6,6 +6,8 @@ import com.c0220h1_project.model.question.QuestionDto;
 import com.c0220h1_project.model.test.Test;
 import com.c0220h1_project.repository.QuestionRepository;
 import com.c0220h1_project.service.question.QuestionService;
+import com.c0220h1_project.service.subject.SubjectService;
+import com.c0220h1_project.service.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +20,18 @@ import java.util.stream.Collectors;
 public class QuestionServiceImpl implements QuestionService {
     @Autowired
     QuestionRepository questionRepository;
+    @Autowired
+    SubjectService subjectService;
+    @Autowired
+    TestService testService;
     private QuestionDto convertToQuestionDTO(Question question){
         QuestionDto questionDto = new QuestionDto();
         questionDto.setQuestionId(question.getQuestionId());
         questionDto.setQuestion(question.getQuestion());
-        questionDto.setAnswer(question.getAnswer());
+        questionDto.setAnswerA(question.getAnswerA());
+        questionDto.setAnswerB(question.getAnswerB());
+        questionDto.setAnswerC(question.getAnswerC());
+        questionDto.setAnswerD(question.getAnswerD());
         questionDto.setRightAnswer(question.getRightAnswer());
         questionDto.setRightAnswer(question.getRightAnswer());
         Set<Test> tests = question.getTests();
@@ -53,7 +62,21 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void save(Question question) {
+    public void save(QuestionDto questionDto) {
+        Question question = new Question();
+        question.setQuestionId(questionDto.getQuestionId());
+        question.setQuestion(questionDto.getQuestion());
+        question.setAnswerA(questionDto.getAnswerA());
+        question.setAnswerB(questionDto.getAnswerB());
+        question.setAnswerC(questionDto.getAnswerC());
+        question.setAnswerD(questionDto.getAnswerD());
+        question.setRightAnswer(questionDto.getRightAnswer());
+        question.setSubject(subjectService.findById(questionDto.getSubjectId()));
+        Set<Test> tests = new HashSet<>();
+        for (int id: questionDto.getTestId()){
+            tests.add(testService.findById(id));
+        }
+        question.setTests(tests);
         questionRepository.save(question);
     }
 

@@ -1,6 +1,7 @@
 package com.c0220h1_project.controller;
 
 import com.c0220h1_project.model.question.Question;
+import com.c0220h1_project.model.question.QuestionDto;
 import com.c0220h1_project.service.question.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,12 +18,12 @@ public class QuestionResControl {
     @Autowired
     QuestionService questionService;
     @RequestMapping(value = "/question", method = RequestMethod.GET)
-    public ResponseEntity<List<Question>> getListQuestion(){
+    public ResponseEntity<List<QuestionDto>> getListQuestion(){
         return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/question/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Question> getQuestion(@PathVariable String id){
+    public ResponseEntity<QuestionDto> getQuestion(@PathVariable String id){
         return new ResponseEntity<>(questionService.findById(id), HttpStatus.OK);
     }
 
@@ -35,7 +36,7 @@ public class QuestionResControl {
     }
     @RequestMapping(value = "/update-question/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> updateQuestion(@PathVariable String id, @RequestBody Question questionForm){
-        Question question = questionService.findById(id);
+        Question question = questionService.findByIdQuestion(id);
         question.setQuestion(questionForm.getQuestion());
         question.setAnswer(questionForm.getAnswer());
         question.setRightAnswer(questionForm.getRightAnswer());

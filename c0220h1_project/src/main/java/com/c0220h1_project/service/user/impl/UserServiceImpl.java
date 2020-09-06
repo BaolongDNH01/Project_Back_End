@@ -39,4 +39,9 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Integer id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    public User findTopByOrderByIdDesc() {
+        return userRepository.findTopByOrderByIdDesc();
+    }
 }

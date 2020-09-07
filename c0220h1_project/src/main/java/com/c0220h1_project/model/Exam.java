@@ -3,15 +3,21 @@ package com.c0220h1_project.model;
 import com.c0220h1_project.model.test.Test;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Exam")
 public class Exam {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer examId;
+    @NotEmpty
     private String examDate;
+    @NotEmpty
     private Double mark;
+    @NotEmpty
     private String[] answer;
+    @NotEmpty
     private String times;
     @ManyToOne
     @JoinColumn(name = "user_id")

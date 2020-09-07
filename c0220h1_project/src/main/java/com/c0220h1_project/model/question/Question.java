@@ -3,6 +3,9 @@ import com.c0220h1_project.model.Subject;
 import com.c0220h1_project.model.test.Test;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -19,31 +22,36 @@ public class Question {
 
     @NotEmpty
     @Size(min = 1, max = 255)
-    private String answer;
+    private String answerA;
+
+    @NotEmpty
+    @Size(min = 1, max = 255)
+    private String answerB;
+
+    @NotEmpty
+    @Size(min = 1, max = 255)
+    private String answerC;
+
+    @NotEmpty
+    @Size(min = 1, max = 255)
+    private String answerD;
 
     @NotEmpty
     @Size(min = 1, max = 255)
     private String rightAnswer;
 
+    @JsonManagedReference
     @ManyToMany
     private
     Set<Test> tests;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
 
     private Subject subject;
 
     public Question() {
-    }
-
-    public Question(String questionId, @NotEmpty @Size(min = 1, max = 255) String question, @NotEmpty @Size(min = 1, max = 255) String answer, @NotEmpty @Size(min = 1, max = 255) String rightAnswer, Set<Test> tests, Subject subject) {
-        this.questionId = questionId;
-        this.question = question;
-        this.answer = answer;
-        this.rightAnswer = rightAnswer;
-        this.tests = tests;
-        this.subject = subject;
     }
 
     public String getQuestionId() {
@@ -62,12 +70,36 @@ public class Question {
         this.question = question;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getAnswerA() {
+        return answerA;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setAnswerA(String answerA) {
+        this.answerA = answerA;
+    }
+
+    public String getAnswerB() {
+        return answerB;
+    }
+
+    public void setAnswerB(String answerB) {
+        this.answerB = answerB;
+    }
+
+    public String getAnswerC() {
+        return answerC;
+    }
+
+    public void setAnswerC(String answerC) {
+        this.answerC = answerC;
+    }
+
+    public String getAnswerD() {
+        return answerD;
+    }
+
+    public void setAnswerD(String answerD) {
+        this.answerD = answerD;
     }
 
     public String getRightAnswer() {

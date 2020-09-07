@@ -1,6 +1,7 @@
 package com.c0220h1_project.controller;
 
 import com.c0220h1_project.model.test.Test;
+import com.c0220h1_project.model.test.TestDto;
 import com.c0220h1_project.service.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ public class TestResControl {
     private TestService testService;
 
     @GetMapping("/getAllTest")
-    public ResponseEntity<List<Test>> getAllTest() {
+    public ResponseEntity<List<TestDto>> getAllTest() {
         return new ResponseEntity<>(testService.findAll(), HttpStatus.OK);
     }
 

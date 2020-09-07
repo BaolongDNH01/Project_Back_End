@@ -1,8 +1,6 @@
 package com.c0220h1_project.repository;
 
 import com.c0220h1_project.model.Exam;
-import com.c0220h1_project.model.UserPoint;
-import org.omg.CORBA.Any;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

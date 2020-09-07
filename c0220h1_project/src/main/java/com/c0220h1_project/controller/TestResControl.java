@@ -32,14 +32,18 @@ public class TestResControl {
     }
 
     @PostMapping("addTest")
-    public void addTest(@RequestBody Test test){
+    public void addTest(@RequestBody TestDto test){
         testService.save(test);
     }
 
     @PostMapping("uploadFile")
     public void upload(@RequestParam("file") MultipartFile file) throws IOException{
         String content = new String(file.getBytes(), StandardCharsets.UTF_8);
-        System.out.println(content);
+        String[] fileData = content.split("\n");
+        for (String data : fileData) {
+            System.out.println(data);
+            System.out.println();
+        }
     }
 
     @PostMapping("deleteTest")

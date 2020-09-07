@@ -15,10 +15,8 @@ import java.util.Set;
 
 @Entity
 public class Test {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotEmpty
     Integer testId;
 
     @NotEmpty

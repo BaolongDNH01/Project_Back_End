@@ -31,6 +31,13 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    public void deleteById(Integer[] ids) {
+        for(int id : ids) {
+            testRepository.deleteById(id);
+        }
+    }
+
+    @Override
     public void save(Test test) {
         testRepository.save(test);
     }
@@ -44,6 +51,7 @@ public class TestServiceImpl implements TestService {
 
         Subject subject = test.getSubject();
         testDto.setSubjectId(subject.getSubjectId());
+        testDto.setSubjectName(subject.getSubjectName());
 
         testDto.setTestCode(test.getTestCode());
 

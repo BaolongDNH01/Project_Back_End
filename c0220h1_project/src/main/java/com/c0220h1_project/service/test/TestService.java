@@ -9,4 +9,5 @@ public interface TestService {
     List<TestDto> findAll();
     void save(Test test);
     Test findById(int testId);
+    void deleteById(Integer[] ids);
 }

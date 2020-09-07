@@ -13,16 +13,17 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
+@RequestMapping("questionList")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class QuestionResControl {
     @Autowired
     QuestionService questionService;
-    @RequestMapping(value = "/question", method = RequestMethod.GET)
+    @GetMapping()
     public ResponseEntity<List<QuestionDto>> getListQuestion(){
         return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/question/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<QuestionDto> getQuestion(@PathVariable String id){
         return new ResponseEntity<>(questionService.findById(id), HttpStatus.OK);
     }
@@ -41,9 +42,8 @@ public class QuestionResControl {
         questionService.save(questionDtoForm);
         return new ResponseEntity<>( HttpStatus.OK);
     }
-    @RequestMapping(value = "/delete-question/{id}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable String id){
+    @DeleteMapping(value = "/delete/{id}")
+    public void deleteQuestion(@PathVariable String id){
         questionService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

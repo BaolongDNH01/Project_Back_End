@@ -17,6 +17,7 @@ build/
 
 ### IntelliJ IDEA ###
 .idea
+.gradle
 *.iws
 *.iml
 *.ipr
@@ -35,3 +36,4 @@ out/
 .vscode/
 .idea\
 application.properties
+.gradle\

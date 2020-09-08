@@ -2,15 +2,20 @@ package com.c0220h1_project.model;
 
 import com.c0220h1_project.model.constant.ERoleName;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "_role")
-public class Role {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
+public class Role implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +27,14 @@ public class Role {
     @Column(name = "role_name")
     private ERoleName roleName;
 
-//    @ManyToMany
+    @ManyToMany(targetEntity = User.class,fetch = FetchType.LAZY, mappedBy = "roles", cascade = CascadeType.ALL)
 //    @JoinTable (
 //            name ="user_role",
-//            joinColumns = @JoinColumn(name="user_id"),
-//            inverseJoinColumns = @JoinColumn(name="role_id")
+//            joinColumns = @JoinColumn(name="role_id"),
+//            inverseJoinColumns = @JoinColumn(name="user_id")
 //    )
 //    @JsonBackReference
-//    List<User> userSet;
+    Set<User> userSet = new HashSet<User>();
 
     public Role() {
     }

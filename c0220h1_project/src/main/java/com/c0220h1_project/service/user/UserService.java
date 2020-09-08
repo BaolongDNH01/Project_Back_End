@@ -8,10 +8,17 @@ import java.util.List;
 
 public interface UserService {
     boolean save(User user);
-    Boolean findByUsername (String Username);
-    Page<User> findAll (Pageable pageable);
-    void deleteUser (Integer id);
+
+    Boolean findByUsername(String Username);
+
+    Page<User> findAll(Pageable pageable);
+
+    void deleteUser(Integer id);
+
     User findTopByOrderByIdDesc();
+
     List<User> findAll();
 
 }
+
+

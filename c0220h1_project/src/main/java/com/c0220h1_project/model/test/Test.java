@@ -5,6 +5,9 @@ import com.c0220h1_project.model.question.Question;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -13,25 +16,29 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "testId")
 public class Test {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotEmpty
     Integer testId;
 
     @NotEmpty
     @Size(min = 1, max = 50)
+    private
     String testCode;
     @NotEmpty
     @Size(min = 1, max = 50)
+    private
     String testName;
     @NotEmpty
     @Size(min = 1, max = 50)
+    private
     String grade;
+
 
     @JsonBackReference
     @ManyToMany
+    private
     Set<Question> questions;
 
     @JsonBackReference
@@ -40,6 +47,7 @@ public class Test {
     private Subject subject;
 
     @OneToMany(mappedBy = "test")
+    @JsonManagedReference
     private List<Exam> examList;
 
     public Test() {

@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "app.login.jwtSecretKey",
+      "type": "java.lang.String",
+      "description": "Description for app.login.jwtSecretKey."
+  }
+] }

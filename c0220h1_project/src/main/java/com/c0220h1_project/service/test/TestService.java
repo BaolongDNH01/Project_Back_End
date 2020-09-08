@@ -1,11 +1,13 @@
 package com.c0220h1_project.service.test;
 
 import com.c0220h1_project.model.test.Test;
+import com.c0220h1_project.model.test.TestDto;
 
 import java.util.List;
 
 public interface TestService {
-    List<Test> findAll();
+    List<TestDto> findAll();
+    String save(TestDto test);
     Test findById(int testId);
-    void save(Test test);
+    void deleteById(Integer[] ids);
 }

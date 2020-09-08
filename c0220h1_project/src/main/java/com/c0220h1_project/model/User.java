@@ -1,5 +1,9 @@
 package com.c0220h1_project.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -12,6 +16,7 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"username"}),
     }
 )
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
     @Id
@@ -23,7 +28,7 @@ public class User {
     private String username;
 
     @NotBlank
-    private String password;
+    private String user_password;
 
     @NotBlank
     @Column(name ="full_name")
@@ -49,6 +54,7 @@ public class User {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Exam> examList;
 
 
@@ -56,10 +62,10 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String fullName, String email, String address, String phoneNumber,
+    public User(String username, String user_password, String fullName, String email, String address, String phoneNumber,
                 String avatar) {
         this.username = username;
-        this.password = password;
+        this.user_password = user_password;
         this.fullName = fullName;
         this.email = email;
         this.address = address;
@@ -67,10 +73,10 @@ public class User {
         this.avatar = avatar;
     }
 
-    public User(String username, String password, String fullName, String email, String address, String phoneNumber,
+    public User(String username, String user_password, String fullName, String email, String address, String phoneNumber,
                 String avatar, Set<Role> roles) {
         this.username = username;
-        this.password = password;
+        this.user_password = user_password;
         this.fullName = fullName;
         this.email = email;
         this.address = address;
@@ -95,12 +101,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUser_password() {
+        return user_password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUser_password(String user_password) {
+        this.user_password = user_password;
     }
 
     public String getFullName() {

@@ -1,5 +1,8 @@
 package com.c0220h1_project.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"username"}),
     }
 )
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
     @Id

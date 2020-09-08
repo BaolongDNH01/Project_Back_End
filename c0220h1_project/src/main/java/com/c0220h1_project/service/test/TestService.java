@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface TestService {
     List<TestDto> findAll();
-    void save(Test test);
+    String save(TestDto test);
     Test findById(int testId);
+    void deleteById(Integer[] ids);
 }

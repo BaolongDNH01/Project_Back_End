@@ -1,7 +1,15 @@
 package com.c0220h1_project.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.deser.Deserializers;
+import org.springframework.core.serializer.Deserializer;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,7 +20,8 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"username"}),
     }
 )
-public class User {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,15 +49,17 @@ public class User {
 
     private String avatar;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable (
-        name ="user_role",
-        joinColumns = @JoinColumn(name="user_id"),
-        inverseJoinColumns = @JoinColumn(name="role_id")
-    )
-    private Set<Role> roles;
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable (
+//        name ="user_role",
+//        joinColumns = @JoinColumn(name="user_id"),
+//        inverseJoinColumns = @JoinColumn(name="role_id")
+//    )
+//    @JsonManagedReference
+    private Set<Role> roles = new HashSet<Role>();
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Exam> examList;
 
 

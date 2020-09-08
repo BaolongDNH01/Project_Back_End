@@ -16,7 +16,17 @@ public class TestDto {
 
     private Integer subjectId;
 
+    private String subjectName;
+
     private List<Integer> examList;
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
 
     public Integer getTestId() {
         return testId;

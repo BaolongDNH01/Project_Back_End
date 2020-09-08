@@ -18,10 +18,8 @@ import java.util.Set;
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "testId")
 public class Test {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotEmpty
     Integer testId;
 
     @NotEmpty

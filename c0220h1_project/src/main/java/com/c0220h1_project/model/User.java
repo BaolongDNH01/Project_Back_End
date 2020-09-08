@@ -1,6 +1,7 @@
 package com.c0220h1_project.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -53,6 +54,7 @@ public class User {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Exam> examList;
 
 

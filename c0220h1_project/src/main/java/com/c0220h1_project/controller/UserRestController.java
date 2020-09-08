@@ -44,7 +44,7 @@ public class UserRestController {
         return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
     }
 
-    @GetMapping("/register")
+    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity registerUser(@RequestBody User user){
         if (userService.save(user)){
             return new ResponseEntity<>(null,HttpStatus.OK);

@@ -50,17 +50,17 @@ public class User implements Serializable {
     private String avatar;
 
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinTable (
-//        name ="user_role",
-//        joinColumns = @JoinColumn(name="user_id"),
-//        inverseJoinColumns = @JoinColumn(name="role_id")
-//    )
+    @JoinTable (
+        name ="user_role",
+        joinColumns = @JoinColumn(name="user_id"),
+        inverseJoinColumns = @JoinColumn(name="role_id")
+    )
 //    @JsonManagedReference
     private Set<Role> roles = new HashSet<Role>();
 
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
-    private List<Exam> examList;
+//    @OneToMany(mappedBy = "user")
+//    @JsonManagedReference
+//    private List<Exam> examList;
 
 
 
@@ -162,11 +162,12 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    public List<Exam> getExamList() {
-        return examList;
-    }
+//    public List<Exam> getExamList() {
+////        return examList;
+////    }
+////
+////    public void setExamList(List<Exam> examList) {
+////        this.examList = examList;
+////    }
 
-    public void setExamList(List<Exam> examList) {
-        this.examList = examList;
-    }
 }

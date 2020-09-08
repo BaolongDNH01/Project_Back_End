@@ -58,4 +58,12 @@ public class Role implements Serializable {
     public void setRoleName(ERoleName eRoleName) {
         this.roleName = eRoleName;
     }
+
+    public Set<User> getUserSet() {
+        return userSet;
+    }
+
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
+    }
 }

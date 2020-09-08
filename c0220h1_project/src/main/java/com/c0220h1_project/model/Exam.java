@@ -19,7 +19,7 @@ public class Exam {
     @NotEmpty
     private String[] answer;
     @NotEmpty
-    private String times;
+    private Integer times;
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIdentityReference(alwaysAsId = true)
@@ -33,7 +33,7 @@ public class Exam {
     public Exam() {
     }
 
-    public Exam(Integer examId, String examDate, Double mark, String[] answer, String times) {
+    public Exam(Integer examId, String examDate, Double mark, String[] answer, Integer times) {
         this.examId = examId;
         this.examDate = examDate;
         this.mark = mark;
@@ -41,11 +41,11 @@ public class Exam {
         this.times = times;
     }
 
-    public String getTimes() {
+    public Integer getTimes() {
         return times;
     }
 
-    public void setTimes(String times) {
+    public void setTimes(Integer times) {
         this.times = times;
     }
 

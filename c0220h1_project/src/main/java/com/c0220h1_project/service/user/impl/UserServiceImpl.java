@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean save(User user) {
-        if (findByUsername(user.getUsername())) {
+        if (!findByUsername(user.getUsername())) {
             return false;
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean findByUsername(String Username) {
-        return userRepository.findAllByUsername(Username) == null;
+        return (userRepository.findByUsername(Username) == null);
     }
 
     @Override

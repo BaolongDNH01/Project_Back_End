@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
-@RequestMapping("questionList")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class QuestionResControl {
     @Autowired
     QuestionService questionService;
-    @GetMapping()
+    @RequestMapping(value = "/question", method = RequestMethod.GET)
     public ResponseEntity<List<QuestionDto>> getListQuestion(){
         return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/question/{id}", method = RequestMethod.GET)
     public ResponseEntity<QuestionDto> getQuestion(@PathVariable String id){
         return new ResponseEntity<>(questionService.findById(id), HttpStatus.OK);
     }
@@ -35,15 +35,22 @@ public class QuestionResControl {
         headers.setLocation(builder.path("/question/{id}").buildAndExpand(questionDto.getQuestionId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
+
     @RequestMapping(value = "/update-question/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> updateQuestion(@PathVariable String id, @RequestBody QuestionDto questionDtoForm){
+        try {
+        }catch (Exception a){
+            questionDtoForm.setTestId((Set<Integer>) questionDtoForm.getTestId());
+        }
         Question question = questionService.findByIdQuestion(id);
         questionDtoForm.setQuestionId(question.getQuestionId());
         questionService.save(questionDtoForm);
         return new ResponseEntity<>( HttpStatus.OK);
     }
-    @DeleteMapping(value = "/delete/{id}")
-    public void deleteQuestion(@PathVariable String id){
+
+    @RequestMapping(value = "/delete-question/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteQuestion(@PathVariable String id){
         questionService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

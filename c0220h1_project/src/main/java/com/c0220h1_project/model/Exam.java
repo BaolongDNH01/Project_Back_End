@@ -1,6 +1,7 @@
 package com.c0220h1_project.model;
 
 import com.c0220h1_project.model.test.Test;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import javax.persistence.*;
@@ -22,11 +23,13 @@ public class Exam {
     private String times;
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     @JsonIdentityReference(alwaysAsId = true)
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "test_id")
+    @JsonBackReference
     @JsonIdentityReference(alwaysAsId = true)
     private Test test;
 

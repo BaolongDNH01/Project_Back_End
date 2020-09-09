@@ -1,14 +1,13 @@
-package com.c0220h1_project.model;
+package com.c0220h1_project.model.user;
 
+import com.c0220h1_project.model.Exam;
+import com.c0220h1_project.model.Role;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.deser.Deserializers;
-import org.springframework.core.serializer.Deserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +20,7 @@ import java.util.Set;
     }
 )
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
-public class User implements Serializable {
+public class User  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +31,8 @@ public class User implements Serializable {
     private String username;
 
     @NotBlank
-    private String user_password;
+    @Column(name = "user_password")
+    private String userPassword;
 
     @NotBlank
     @Column(name ="full_name")
@@ -55,40 +55,11 @@ public class User implements Serializable {
         joinColumns = @JoinColumn(name="user_id"),
         inverseJoinColumns = @JoinColumn(name="role_id")
     )
-//    @JsonManagedReference
-    private Set<Role> roles = new HashSet<Role>();
+    private Set<Role> roles = new HashSet<>();
 
-//    @OneToMany(mappedBy = "user")
-//    @JsonManagedReference
-//    private List<Exam> examList;
-
-
-
-    public User() {
-    }
-
-    public User(String username, String user_password, String fullName, String email, String address, String phoneNumber,
-                String avatar) {
-        this.username = username;
-        this.user_password = user_password;
-        this.fullName = fullName;
-        this.email = email;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.avatar = avatar;
-    }
-
-    public User(String username, String user_password, String fullName, String email, String address, String phoneNumber,
-                String avatar, Set<Role> roles) {
-        this.username = username;
-        this.user_password = user_password;
-        this.fullName = fullName;
-        this.email = email;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.avatar = avatar;
-        this.roles = roles;
-    }
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Exam> examList;
 
     public Integer getId() {
         return id;
@@ -106,12 +77,12 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public String getUser_password() {
-        return user_password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
     public String getFullName() {
@@ -163,12 +134,12 @@ public class User implements Serializable {
     }
 
 
-//    public List<Exam> getExamList() {
-////        return examList;
-////    }
-////
-////    public void setExamList(List<Exam> examList) {
-////        this.examList = examList;
-////    }
+    public List<Exam> getExamList() {
+        return examList;
+    }
+
+    public void setExamList(List<Exam> examList) {
+        this.examList = examList;
+    }
 
 }

@@ -1,15 +1,14 @@
 package com.c0220h1_project.service.user;
 
-import com.c0220h1_project.model.User;
-
-import java.util.List;
+import com.c0220h1_project.model.user.User;
+import com.c0220h1_project.model.user.UserDto;
 
 import java.util.List;
 
 public interface UserService {
     boolean save(User user);
 
-    Boolean findByUsername(String Username);
+    Boolean findByUsername(String username);
 
     List<User> findAll();
 
@@ -17,8 +16,7 @@ public interface UserService {
 
     User findTopByOrderByIdDesc();
 
-    List<User> findAll();
-
+    User parseDto(UserDto userDto);
 }
 
 

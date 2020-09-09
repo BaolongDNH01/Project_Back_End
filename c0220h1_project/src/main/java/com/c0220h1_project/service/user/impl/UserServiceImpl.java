@@ -1,8 +1,8 @@
 package com.c0220h1_project.service.user.impl;
 
 import com.c0220h1_project.model.Role;
-import com.c0220h1_project.model.User;
-import com.c0220h1_project.model.constant.ERoleName;
+import com.c0220h1_project.model.user.User;
+import com.c0220h1_project.model.user.UserDto;
 import com.c0220h1_project.repository.RoleRepository;
 import com.c0220h1_project.repository.UserRepository;
 import com.c0220h1_project.service.user.UserService;
@@ -26,21 +26,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean save(User user) {
-        if (!findByUsername(user.getUsername())) {
+        if (Boolean.FALSE.equals(findByUsername(user.getUsername()))) {
             return false;
         }
         Set<Role> role = new HashSet<>();
         role.add(roleRepository.findById(2).orElse(null));
         user.setRoles(role);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setUser_password(encoder.encode(user.getUser_password()));
+        user.setUserPassword(encoder.encode(user.getUserPassword()));
         userRepository.save(user);
         return true;
     }
 
     @Override
-    public Boolean findByUsername(String Username) {
-        return (userRepository.findByUsername(Username) == null);
+    public Boolean findByUsername(String username) {
+        return (userRepository.findByUsername(username) == null);
     }
 
     @Override
@@ -59,8 +59,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public User parseDto(UserDto userDto) {
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setUsername(userDto.getUsername());
+        user.setUserPassword(userDto.getUserPassword());
+        user.setAddress(userDto.getAddress());
+        user.setEmail(userDto.getAddress());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setAvatar(userDto.getAvatar());
+        user.setExamList(userDto.getExamList());
+        return user ;
     }
+
 }
 

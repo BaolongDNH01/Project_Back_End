@@ -74,13 +74,13 @@ public class UserRestController {
         return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
     }
 
-//    @GetMapping("/register")
-//    public ResponseEntity registerUser(User user){
-//        if (userService.save(user)){
-//            return new ResponseEntity<>(null,HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(null,HttpStatus.CONFLICT);
-//    }
+    @GetMapping("/register")
+    public ResponseEntity registerUser(User user){
+        if (userService.save(user)){
+            return new ResponseEntity<>(null,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null,HttpStatus.CONFLICT);
+    }
 
     @GetMapping("/delete-user/{id}")
     public ResponseEntity deleteUser(@PathVariable Integer id){

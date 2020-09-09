@@ -14,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import java.util.List;
 
@@ -40,11 +42,12 @@ public class UserRestController {
 
 
     @GetMapping("/listUser")
-    public ResponseEntity<Page<User>> getListUser(@PageableDefault(size = 10) Pageable pageable) {
-        if (userService.findAll(pageable).isEmpty()) {
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<User>> getListUser() {
+        if (userService.findAll().isEmpty()) {
+            return new ResponseEntity<List<User>>((List<User>) null, HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
+        return new ResponseEntity<List<User>>(userService.findAll(), HttpStatus.OK);
     }
     @GetMapping("/allUser")
     public ResponseEntity<List<User>> getAllUser(){
@@ -60,6 +63,7 @@ public class UserRestController {
     }
 
     @GetMapping("/delete-user/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity deleteUser(@PathVariable Integer id){
             userService.deleteUser(id);
             return new ResponseEntity(null,HttpStatus.OK);

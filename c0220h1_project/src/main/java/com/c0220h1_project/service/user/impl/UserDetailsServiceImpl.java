@@ -1,6 +1,6 @@
 package com.c0220h1_project.service.user.impl;
 
-import com.c0220h1_project.model.User;
+import com.c0220h1_project.model.user.User;
 import com.c0220h1_project.model.UserPrincipal;
 import com.c0220h1_project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +18,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).orElseThrow (
-                () -> new UsernameNotFoundException("Username [" + username +"] not found!")
-        );
+        User user = userRepository.findByUsername(username);
+//        orElseThrow (
+//                () -> new UsernameNotFoundException("Username [" + username +"] not found!")
+//        )
         return UserPrincipal.build(user);
     }
 }

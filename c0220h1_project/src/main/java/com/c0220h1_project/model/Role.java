@@ -1,7 +1,7 @@
 package com.c0220h1_project.model;
 
 import com.c0220h1_project.model.constant.ERoleName;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.c0220h1_project.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.NaturalId;
@@ -9,7 +9,6 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -57,5 +56,13 @@ public class Role implements Serializable {
 
     public void setRoleName(ERoleName eRoleName) {
         this.roleName = eRoleName;
+    }
+
+    public Set<User> getUserSet() {
+        return userSet;
+    }
+
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
     }
 }

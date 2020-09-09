@@ -8,9 +8,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -34,16 +38,29 @@ public class QuestionResControl {
         headers.setLocation(builder.path("/question/{id}").buildAndExpand(questionDto.getQuestionId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
+
     @PutMapping(value = "/update-question/{id}")
     public ResponseEntity<Void> updateQuestion(@PathVariable String id, @RequestBody QuestionDto questionDtoForm){
+        try {
+        }catch (Exception a){
+            questionDtoForm.setTestId((Set<Integer>) questionDtoForm.getTestId());
+        }
         Question question = questionService.findByIdQuestion(id);
         questionDtoForm.setQuestionId(question.getQuestionId());
         questionService.save(questionDtoForm);
         return new ResponseEntity<>( HttpStatus.OK);
     }
+
     @DeleteMapping(value = "/delete-question/{id}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable String id){
         questionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("uploadFile")
+    public void upload(@RequestParam("file") MultipartFile file) throws IOException {
+        String content = new String(file.getBytes(), StandardCharsets.UTF_8);
+        String[] arrData = content.split("\n");
+        questionService.importFile(arrData);
     }
 }

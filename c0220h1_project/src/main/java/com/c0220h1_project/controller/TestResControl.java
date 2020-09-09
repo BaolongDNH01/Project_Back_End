@@ -2,6 +2,7 @@ package com.c0220h1_project.controller;
 
 import com.c0220h1_project.model.test.Test;
 import com.c0220h1_project.model.test.TestDto;
+import com.c0220h1_project.repository.SubjectRepository;
 import com.c0220h1_project.service.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ public class TestResControl {
     @Autowired
     private TestService testService;
 
+    @Autowired
+    private SubjectRepository subjectRepository;
+
     @GetMapping("/getAllTest")
     public ResponseEntity<List<TestDto>> getAllTest() {
         return new ResponseEntity<>(testService.findAll(), HttpStatus.OK);
@@ -32,19 +36,20 @@ public class TestResControl {
     }
 
     @PostMapping("addTest")
-    public void addTest(@RequestBody TestDto test){
-        testService.save(test);
+    public ResponseEntity<String> addTest(@RequestBody TestDto test){
+        return new ResponseEntity<>(testService.save(test), HttpStatus.OK);
     }
 
+
     @PostMapping("uploadFile")
-    public void upload(@RequestParam("file") MultipartFile file) throws IOException{
+    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) throws IOException{
         String content = new String(file.getBytes(), StandardCharsets.UTF_8);
-        String[] fileData = content.split("\n");
-        for (String data : fileData) {
-            System.out.println(data);
-            System.out.println();
-        }
+        String[] arrData = content.split("\n");
+        String message = testService.importFile(arrData);
+        System.out.println(message);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
 
     @PostMapping("deleteTest")
     public void deleteFile(@RequestBody Integer[] ids){

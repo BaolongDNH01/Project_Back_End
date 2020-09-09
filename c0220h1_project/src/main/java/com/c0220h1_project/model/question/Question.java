@@ -17,7 +17,7 @@ public class Question{
 
     @NotEmpty
     @Size(min = 1, max = 255)
-    private String question;
+    private String questionName;
 
     @NotEmpty
     @Size(min = 1, max = 255)
@@ -61,11 +61,11 @@ public class Question{
     }
 
     public String getQuestion() {
-        return question;
+        return questionName;
     }
 
     public void setQuestion(String question) {
-        this.question = question;
+        this.questionName = question;
     }
 
     public String getAnswerA() {

@@ -2,10 +2,10 @@
 package com.c0220h1_project.controller;
 
 
-import com.c0220h1_project.model.user.User;
 import com.c0220h1_project.model.UserPrincipal;
 import com.c0220h1_project.model.login_msg.request.Login;
 import com.c0220h1_project.model.login_msg.response.JwtResponse;
+import com.c0220h1_project.model.user.User;
 import com.c0220h1_project.model.user.UserDto;
 import com.c0220h1_project.payload.UpdatePasswordToken;
 import com.c0220h1_project.payload.response.ApiResponse;
@@ -25,12 +25,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController

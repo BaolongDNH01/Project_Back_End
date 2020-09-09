@@ -1,26 +1,28 @@
 package com.c0220h1_project.service.user.impl;
 
-import com.c0220h1_project.model.User;
+
+import com.c0220h1_project.model.user.User;
+import com.c0220h1_project.model.user.UserDto;
 import com.c0220h1_project.repository.UserRepository;
 import com.c0220h1_project.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-//    @Override
+    @Override
     public Boolean save(User user) {
-        if (findByUsername(user.getUsername())) {
+        if (Boolean.FALSE.equals(findByUsername(user.getUsername()))) {
             return false;
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setUser_password(encoder.encode(user.getUser_password()));
+        user.setUserPassword(encoder.encode(user.getUserPassword()));
         userRepository.save(user);
         return true;
     }
@@ -31,13 +33,13 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public Boolean findByUsername(String Username) {
-        return userRepository.findAllByUsername(Username) == null;
+    public Boolean findByUsername(String username) {
+        return (userRepository.findByUsername(username) == null);
     }
 
     @Override
-    public Page<User> findAll(Pageable pageable) {
-        return userRepository.findAll(pageable);
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
@@ -51,10 +53,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User parseDto(UserDto userDto) {
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setUsername(userDto.getUsername());
+        user.setUserPassword(userDto.getUserPassword());
+        user.setAddress(userDto.getAddress());
+        user.setEmail(userDto.getAddress());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setAvatar(userDto.getAvatar());
+        user.setExamList(userDto.getExamList());
+        return user ;
+    }
+
     public User findById(Integer id) {
         return userRepository.findById(id).orElse(null);
     }
-
 
 }
 

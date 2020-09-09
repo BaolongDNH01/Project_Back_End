@@ -1,4 +1,5 @@
 package com.c0220h1_project.model;
+import com.c0220h1_project.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -54,7 +55,7 @@ public class UserPrincipal implements UserDetails, Serializable {
         return new UserPrincipal(
             user.getId(),
             user.getUsername(),
-            user.getUser_password(),
+            user.getUserPassword(),
             user.getFullName(),
             user.getEmail(),
             user.getAddress(),

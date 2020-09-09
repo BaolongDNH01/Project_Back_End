@@ -1,7 +1,7 @@
 package com.c0220h1_project.model;
 
 import com.c0220h1_project.model.constant.ERoleName;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.c0220h1_project.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.NaturalId;
@@ -9,7 +9,6 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity

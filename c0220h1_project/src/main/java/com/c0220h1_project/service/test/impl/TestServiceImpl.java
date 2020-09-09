@@ -51,6 +51,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public String importFile(String[] arrData) {
+        String message = "";
         List<String> arrDataTrim = new ArrayList<>();
         for (String data : arrData) {
             if (!data.equals("")) {
@@ -61,9 +62,9 @@ public class TestServiceImpl implements TestService {
         if (arrDataTrim.size() > 64) {
             return "can't import file(data more than 64 rows)";
         } else {
-            checkValidFile(arrDataTrim);
+           message = checkValidFile(arrDataTrim);
         }
-        return null;
+        return message;
     }
 
     private String checkValidFile(List<String> arrData) {

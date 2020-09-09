@@ -3,7 +3,6 @@ import com.c0220h1_project.model.Subject;
 import com.c0220h1_project.model.test.Test;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -12,7 +11,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
-public class Question {
+public class Question{
     @Id
     private String questionId;
 
@@ -51,8 +50,7 @@ public class Question {
 
     private Subject subject;
 
-    public Question() {
-    }
+
 
     public String getQuestionId() {
         return questionId;

@@ -45,7 +45,9 @@ public class TestResControl {
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) throws IOException{
         String content = new String(file.getBytes(), StandardCharsets.UTF_8);
         String[] arrData = content.split("\n");
-        return new ResponseEntity<>(testService.importFile(arrData), HttpStatus.OK);
+        String message = testService.importFile(arrData);
+        System.out.println(message);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 

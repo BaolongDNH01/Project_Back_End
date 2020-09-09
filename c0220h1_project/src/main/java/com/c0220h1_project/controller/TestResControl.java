@@ -36,15 +36,15 @@ public class TestResControl {
         testService.save(test);
     }
 
-    @PostMapping("uploadFile")
-    public void upload(@RequestParam("file") MultipartFile file) throws IOException{
-        String content = new String(file.getBytes(), StandardCharsets.UTF_8);
-        String[] fileData = content.split("\n");
-        for (String data : fileData) {
-            System.out.println(data);
-            System.out.println();
-        }
-    }
+//    @PostMapping("uploadFile")
+//    public void upload(@RequestParam("file") MultipartFile file) throws IOException{
+//        String content = new String(file.getBytes(), StandardCharsets.UTF_8);
+//        String[] fileData = content.split("\n");
+//        for (String data : fileData) {
+//            System.out.println(data);
+//            System.out.println();
+//        }
+//    }
 
     @PostMapping("deleteTest")
     public void deleteFile(@RequestBody Integer[] ids){

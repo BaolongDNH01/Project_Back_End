@@ -10,4 +10,5 @@ public interface TestService {
     String save(TestDto test);
     Test findById(int testId);
     void deleteById(Integer[] ids);
+    String importFile(String[] data);
 }

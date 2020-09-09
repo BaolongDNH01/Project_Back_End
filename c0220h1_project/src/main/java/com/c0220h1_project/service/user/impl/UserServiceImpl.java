@@ -27,10 +27,10 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-//    @Override
-//    public void save(User user) {
-//        userRepository.save(user);
-//    }
+    @Override
+    public void edit(User user) {
+        userRepository.save(user);
+    }
 
     @Override
     public Boolean findByUsername(String username) {

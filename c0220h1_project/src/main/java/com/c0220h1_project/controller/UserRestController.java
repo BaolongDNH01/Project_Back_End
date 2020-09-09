@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserRestController {
@@ -46,6 +48,10 @@ public class UserRestController {
             return new ResponseEntity<List<User>>((List<User>) null, HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<User>>(userService.findAll(), HttpStatus.OK);
+    }
+    @GetMapping("/allUser")
+    public ResponseEntity<List<User>> getAllUser(){
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)

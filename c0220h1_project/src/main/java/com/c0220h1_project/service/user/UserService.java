@@ -4,6 +4,8 @@ import com.c0220h1_project.model.User;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface UserService {
     boolean save(User user);
 
@@ -14,6 +16,9 @@ public interface UserService {
     void deleteUser(Integer id);
 
     User findTopByOrderByIdDesc();
+
+    List<User> findAll();
+
 }
 
 

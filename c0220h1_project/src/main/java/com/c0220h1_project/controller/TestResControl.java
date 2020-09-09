@@ -40,12 +40,14 @@ public class TestResControl {
         return new ResponseEntity<>(testService.save(test), HttpStatus.OK);
     }
 
+
     @PostMapping("uploadFile")
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) throws IOException{
         String content = new String(file.getBytes(), StandardCharsets.UTF_8);
         String[] arrData = content.split("\n");
         return new ResponseEntity<>(testService.importFile(arrData), HttpStatus.OK);
     }
+
 
     @PostMapping("deleteTest")
     public void deleteFile(@RequestBody Integer[] ids){

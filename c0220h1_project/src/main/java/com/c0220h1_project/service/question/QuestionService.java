@@ -11,4 +11,5 @@ public interface QuestionService {
     Question findByIdQuestion(String questionId);
     void save(QuestionDto questionDto);
     void delete(String questionId);
+    String importFile(String[] data);
 }

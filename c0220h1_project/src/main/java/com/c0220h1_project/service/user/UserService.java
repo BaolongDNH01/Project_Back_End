@@ -12,7 +12,7 @@ public interface UserService {
 
     Boolean findByUsername(String username);
 
-    Page<User> findAll(Pageable pageable);
+    List<User> findAll();
 
     void deleteUser(Integer id);
 

@@ -1,17 +1,15 @@
 package com.c0220h1_project.service.user.impl;
 
 
-import com.c0220h1_project.model.Role;
 import com.c0220h1_project.model.user.User;
 import com.c0220h1_project.model.user.UserDto;
-import com.c0220h1_project.repository.RoleRepository;
 import com.c0220h1_project.repository.UserRepository;
 import com.c0220h1_project.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,7 +17,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public boolean save(User user) {
+    public Boolean save(User user) {
         if (Boolean.FALSE.equals(findByUsername(user.getUsername()))) {
             return false;
         }
@@ -40,8 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> findAll(Pageable pageable) {
-        return userRepository.findAll(pageable);
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override

@@ -1,7 +1,5 @@
-
 package com.c0220h1_project.controller;
-
-
+import com.c0220h1_project.model.Exam;
 import com.c0220h1_project.model.UserPrincipal;
 import com.c0220h1_project.model.login_msg.request.Login;
 import com.c0220h1_project.model.login_msg.response.JwtResponse;
@@ -159,10 +157,10 @@ public class UserRestController {
         if (user == null) {
             return new ResponseEntity<>(new ApiResponse(false, NOT_FOUND_USER), HttpStatus.NOT_FOUND);
         }
-        if (!encoder.matches(updatePasswordToken.getCurrentPassword(), user.getUser_password())) {
+        if (!encoder.matches(updatePasswordToken.getCurrentPassword(), user.getUserPassword())) {
             return new ResponseEntity<>(new ApiResponse(false, "The password is incorrect!"), HttpStatus.BAD_REQUEST);
         }
-        user.setUser_password(encoder.encode(updatePasswordToken.getNewPassword()));
+        user.setUsername(encoder.encode(updatePasswordToken.getNewPassword()));
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

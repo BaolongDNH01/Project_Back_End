@@ -22,9 +22,12 @@ public class QuestionInExamResController {
         return new ResponseEntity<>(questionInExamsList, HttpStatus.OK);
     }
     @PostMapping(value = "/addQuestionInExam")
-    public void createQuestionInExam(@RequestBody QuestionInExam questionInExam) {
-        questionInExamService.save(questionInExam);
+    public void createQuestionInExam(@RequestBody List<QuestionInExam> questionInExams) {
+        for (QuestionInExam questionInExam : questionInExams) {
+            questionInExamService.save(questionInExam);
+        }
     }
+
     @RequestMapping(value = "/delete-question-in-exam/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteQuestionInExam(@PathVariable String[] id){
         questionInExamService.delete(id);

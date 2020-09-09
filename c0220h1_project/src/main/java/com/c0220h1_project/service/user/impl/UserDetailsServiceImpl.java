@@ -1,6 +1,6 @@
 package com.c0220h1_project.service.user.impl;
 
-import com.c0220h1_project.model.User;
+import com.c0220h1_project.model.user.User;
 import com.c0220h1_project.model.UserPrincipal;
 import com.c0220h1_project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

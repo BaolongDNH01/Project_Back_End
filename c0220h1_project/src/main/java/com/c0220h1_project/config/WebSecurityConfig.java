@@ -1,7 +1,7 @@
 package com.c0220h1_project.config;
 
 import com.c0220h1_project.model.Role;
-import com.c0220h1_project.model.User;
+import com.c0220h1_project.model.user.User;
 import com.c0220h1_project.model.constant.ERoleName;
 import com.c0220h1_project.repository.RoleRepository;
 import com.c0220h1_project.repository.UserRepository;
@@ -65,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     ApplicationRunner init(RoleRepository roleRepository, UserRepository userRepository) {
+        System.out.println("Created !");
         return args -> {
             if (roleRepository.findAll().size() == 0) {
 
@@ -94,8 +95,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     "Da Nang",
                     "0123456799",
                     null,
-                    roles
-                );
+                    roles,
+                        examList);
                 userRepository.save(admin);
 
                 Set<Role> rolesForMember = new HashSet<>();
@@ -111,8 +112,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "Da Nang",
                         "0998283831",
                         null,
-                        rolesForMember
-                );
+                        rolesForMember,
+                        examList);
                 userRepository.save(member);
             }
         };

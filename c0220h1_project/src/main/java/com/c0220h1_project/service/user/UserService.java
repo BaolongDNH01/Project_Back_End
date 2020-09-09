@@ -1,15 +1,16 @@
 package com.c0220h1_project.service.user;
 
-import com.c0220h1_project.model.User;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.c0220h1_project.model.user.User;
+import com.c0220h1_project.model.user.UserDto;
+import java.util.List;
+
 
 public interface UserService {
     Boolean save(User user);
 
 //    void save(User user);
 
-    Boolean findByUsername(String Username);
+    Boolean findByUsername(String username);
 
     Page<User> findAll(Pageable pageable);
 
@@ -17,9 +18,13 @@ public interface UserService {
 
     User findTopByOrderByIdDesc();
 
+
+    User parseDto(UserDto userDto);
+
     //    tinh
 
     User findById(Integer id);
+
 }
 
 

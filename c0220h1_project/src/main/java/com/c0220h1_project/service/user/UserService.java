@@ -1,24 +1,25 @@
 package com.c0220h1_project.service.user;
 
 import com.c0220h1_project.model.User;
-
-import java.util.List;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
-    boolean save(User user);
+    Boolean save(User user);
+
+//    void save(User user);
 
     Boolean findByUsername(String Username);
 
-    List<User> findAll();
+    Page<User> findAll(Pageable pageable);
 
     void deleteUser(Integer id);
 
     User findTopByOrderByIdDesc();
 
-    List<User> findAll();
+    //    tinh
 
+    User findById(Integer id);
 }
 
 

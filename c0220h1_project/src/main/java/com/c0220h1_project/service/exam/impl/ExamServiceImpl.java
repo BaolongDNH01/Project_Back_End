@@ -4,6 +4,8 @@ import com.c0220h1_project.model.Exam;
 import com.c0220h1_project.repository.ExamRepository;
 import com.c0220h1_project.service.exam.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,4 +39,11 @@ public class ExamServiceImpl implements ExamService {
     public List<Object> findUserPointDesc() {
         return examRepository.findUserPointDesc();
     }
+
+    @Override
+    public List<Exam> findByUserId(Integer id) {
+        return examRepository.findByUserId(id);
+    }
+
+
 }

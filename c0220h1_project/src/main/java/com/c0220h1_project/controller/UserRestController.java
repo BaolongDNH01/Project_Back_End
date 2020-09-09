@@ -1,11 +1,16 @@
 
 package com.c0220h1_project.controller;
 
+import com.c0220h1_project.model.Exam;
 import com.c0220h1_project.model.User;
 import com.c0220h1_project.model.UserPrincipal;
 import com.c0220h1_project.model.login_msg.request.Login;
 import com.c0220h1_project.model.login_msg.response.JwtResponse;
+import com.c0220h1_project.payload.UpdatePasswordToken;
+import com.c0220h1_project.payload.response.ApiResponse;
 import com.c0220h1_project.security.JwtProvider;
+import com.c0220h1_project.service.exam.ExamService;
+import com.c0220h1_project.service.test.TestService;
 import com.c0220h1_project.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,15 +25,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.util.List;
-
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+//@RequestMapping(path = "/users")
 public class UserRestController {
     @Autowired
     UserService userService;
@@ -40,22 +49,33 @@ public class UserRestController {
     @Autowired
     private JwtProvider jwtProvider;
 
+    @Autowired
+    TestService testService;
+
+    @Autowired
+    ExamService examService;
+
+    private final String NOT_FOUND_USER = "Cannot find this user!";
+
+    private final String NOT_FOUND_EXAMS = "Cannot find exam list!";
+
+    private PasswordEncoder encoder;
+
+    @Autowired
+    public void setEncoder(PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
 
     @GetMapping("/listUser")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<User>> getListUser() {
-        if (userService.findAll().isEmpty()) {
-            return new ResponseEntity<List<User>>((List<User>) null, HttpStatus.NO_CONTENT);
+    public ResponseEntity<Page<User>> getListUser(@PageableDefault(size = 10) Pageable pageable) {
+        if (userService.findAll(pageable).isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<User>>(userService.findAll(), HttpStatus.OK);
-    }
-    @GetMapping("/allUser")
-    public ResponseEntity<List<User>> getAllUser(){
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity registerUser(@RequestBody User user){
+    @GetMapping("/register")
+    public ResponseEntity registerUser(User user){
         if (userService.save(user)){
             return new ResponseEntity<>(null,HttpStatus.OK);
         }
@@ -63,7 +83,6 @@ public class UserRestController {
     }
 
     @GetMapping("/delete-user/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity deleteUser(@PathVariable Integer id){
             userService.deleteUser(id);
             return new ResponseEntity(null,HttpStatus.OK);
@@ -98,6 +117,80 @@ public class UserRestController {
         );
         return ResponseEntity.ok(response);
     }
+
+    //    tinh - get user by id
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> findUserById(@PathVariable("id") Integer id) {
+        User user = userService.findById(id);
+        if (user == null) {
+            return new ResponseEntity<>(new ApiResponse(false, NOT_FOUND_USER), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+//    tinh - update user
+
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<Object> updateUser(@PathVariable Integer id, @RequestBody User user) {
+        User currentUser = userService.findById(id);
+        if (currentUser == null) {
+            return new ResponseEntity<>(new ApiResponse(false, NOT_FOUND_USER), HttpStatus.NOT_FOUND);
+        }
+        currentUser.setUsername(user.getUsername());
+        currentUser.setFullName(user.getFullName());
+        currentUser.setEmail(user.getEmail());
+        currentUser.setAddress(user.getAddress());
+        currentUser.setPhoneNumber(user.getPhoneNumber());
+        userService.save(currentUser);
+//        URI location = ServletUriComponentsBuilder
+//                .fromCurrentRequest()
+//                .path("/{id}")
+//                .buildAndExpand(currentUser.getId()).toUri();
+//        return ResponseEntity.created(location).body(currentUser);
+        return new ResponseEntity<>(currentUser, HttpStatus.OK);
+    }
+
+//    tinh - update password
+
+    @PatchMapping("/changePassword/{id}")
+    public ResponseEntity<Object> changePassword(@PathVariable Integer id, @RequestBody UpdatePasswordToken updatePasswordToken) {
+        User user = userService.findById(id);
+        if (user == null) {
+            return new ResponseEntity<>(new ApiResponse(false, NOT_FOUND_USER), HttpStatus.NOT_FOUND);
+        }
+        if (!encoder.matches(updatePasswordToken.getCurrentPassword(), user.getUser_password())) {
+            return new ResponseEntity<>(new ApiResponse(false, "The password is incorrect!"), HttpStatus.BAD_REQUEST);
+        }
+        user.setUser_password(encoder.encode(updatePasswordToken.getNewPassword()));
+        userService.save(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+//    tinh - test history
+
+    @GetMapping(value = "/history/{id}")
+    public ResponseEntity<Object> getTestHistory(@PathVariable("id") Integer id) {
+        List<Exam> exams = examService.findByUserId(id);
+//        double sum = 0;
+//        double avg;
+//        int count = 0;
+        if (exams == null) {
+            return new ResponseEntity<>(new ApiResponse(false, NOT_FOUND_EXAMS), HttpStatus.NOT_FOUND);
+        }
+//        else {
+//            for (Exam exam : exams) {
+//                 exam.getTest().getTestName();
+//                 exam.getMark();
+//                 exam.getExamDate();
+//                sum = sum + exam.getMark();
+//                count += 1;
+//            }
+//            avg = sum / count;
+//        }
+        return new ResponseEntity<>(exams, HttpStatus.OK);
+    }
+
 
 }
 

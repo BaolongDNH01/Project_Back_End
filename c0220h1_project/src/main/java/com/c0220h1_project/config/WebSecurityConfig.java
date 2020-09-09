@@ -65,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     ApplicationRunner init(RoleRepository roleRepository, UserRepository userRepository) {
+        System.out.println("Created !");
         return args -> {
             if (roleRepository.findAll().size() == 0) {
 

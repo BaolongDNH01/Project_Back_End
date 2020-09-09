@@ -9,16 +9,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-    @Override
-    public boolean save(User user) {
-        if (!findByUsername(user.getUsername())) {
+//    @Override
+    public Boolean save(User user) {
+        if (findByUsername(user.getUsername())) {
             return false;
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -27,9 +25,14 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+//    @Override
+//    public void save(User user) {
+//        userRepository.save(user);
+//    }
+
     @Override
     public Boolean findByUsername(String Username) {
-        return (userRepository.findByUsername(Username) == null);
+        return userRepository.findAllByUsername(Username) == null;
     }
 
     @Override
@@ -48,8 +51,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public User findById(Integer id) {
+        return userRepository.findById(id).orElse(null);
     }
+
+
 }
 

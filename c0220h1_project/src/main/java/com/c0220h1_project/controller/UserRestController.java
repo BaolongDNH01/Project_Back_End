@@ -129,7 +129,7 @@ public class UserRestController {
 
 //    tinh - update user
 
-    @PatchMapping(value = "/{id}")
+    @PatchMapping(value = "update-user/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable Integer id, @RequestBody User user) {
         User currentUser = userService.findById(id);
         if (currentUser == null) {
@@ -146,7 +146,7 @@ public class UserRestController {
 
 //    tinh - update password
 
-    @PatchMapping("/changePassword/{id}")
+    @PatchMapping("/update-password/{id}")
     public ResponseEntity<Object> changePassword(@PathVariable Integer id, @RequestBody UpdatePasswordToken updatePasswordToken) {
         User user = userService.findById(id);
         if (user == null) {

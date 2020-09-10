@@ -8,6 +8,16 @@ public class UserDto {
     private Integer id;
     private String username;
     private String userPassword;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    private String fullName;
     private String email;
     private String address;
     private String phoneNumber;
@@ -69,13 +79,4 @@ public class UserDto {
         this.avatar = avatar;
     }
 
-    public List<Exam> getExamList() {
-        return examList;
-    }
-
-    public void setExamList(List<Exam> examList) {
-        this.examList = examList;
-    }
-
-    List<Exam> examList;
 }

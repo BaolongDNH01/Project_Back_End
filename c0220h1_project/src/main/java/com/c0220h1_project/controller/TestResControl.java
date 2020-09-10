@@ -35,13 +35,13 @@ public class TestResControl {
         return new ResponseEntity<>(test, HttpStatus.OK);
     }
 
-    @PostMapping("addTest")
+    @PostMapping("/addTest")
     public ResponseEntity<String> addTest(@RequestBody TestDto test){
         return new ResponseEntity<>(testService.save(test), HttpStatus.OK);
     }
 
 
-    @PostMapping("uploadFile")
+    @PostMapping("/importTest")
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) throws IOException{
         String content = new String(file.getBytes(), StandardCharsets.UTF_8);
         String[] arrData = content.split("\n");
@@ -51,7 +51,7 @@ public class TestResControl {
     }
 
 
-    @PostMapping("deleteTest")
+    @PostMapping("/deleteTest")
     public void deleteFile(@RequestBody Integer[] ids){
         System.out.println(ids);
         testService.deleteById(ids);

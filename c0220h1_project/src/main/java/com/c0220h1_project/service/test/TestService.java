@@ -8,7 +8,11 @@ import java.util.List;
 public interface TestService {
     List<TestDto> findAll();
     String save(TestDto test);
-    Test findById(int testId);
+
+    TestDto findById(int testId);
+
+//  trả về Test lưu database
+    Test findByIdReturnTest(int testId);
     void deleteById(Integer[] ids);
     String importFile(String[] data);
 }

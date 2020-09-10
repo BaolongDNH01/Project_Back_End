@@ -38,7 +38,12 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public Test findById(int testId) {
+    public TestDto findById(int testId) {
+        return testRepository.findById(testId).map(this::convertToTestDto).orElse(null);
+    }
+
+    @Override
+    public Test findByIdReturnTest(int testId) {
         return testRepository.findById(testId).orElse(null);
     }
 

@@ -1,6 +1,7 @@
 package com.c0220h1_project.service.user.impl;
 
 
+import com.c0220h1_project.model.Exam;
 import com.c0220h1_project.model.user.User;
 import com.c0220h1_project.model.user.UserDto;
 import com.c0220h1_project.repository.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean save(User user) {
-        if (Boolean.FALSE.equals(findByUsername(user.getUsername()))) {
+        if (Boolean.TRUE.equals(findByUsername(user.getUsername()))) {
             return false;
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -34,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean findByUsername(String username) {
-        return (userRepository.findByUsername(username) == null);
+        return (userRepository.findByUsername(username).orElse(null) != null);
     }
 
     @Override
@@ -58,11 +60,12 @@ public class UserServiceImpl implements UserService {
         user.setId(userDto.getId());
         user.setUsername(userDto.getUsername());
         user.setUserPassword(userDto.getUserPassword());
+        user.setFullName(userDto.getFullName());
         user.setAddress(userDto.getAddress());
         user.setEmail(userDto.getAddress());
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setAvatar(userDto.getAvatar());
-        user.setExamList(userDto.getExamList());
+        user.setExamList(new ArrayList<>());
         return user ;
     }
 

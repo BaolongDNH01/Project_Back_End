@@ -30,8 +30,8 @@ public class TestResControl {
     }
 
     @GetMapping("/getTestById/{id}")
-    public ResponseEntity<Test> getTestById(@PathVariable Integer id){
-        Test test = testService.findById(id);
+    public ResponseEntity<TestDto> getTestById(@PathVariable Integer id){
+        TestDto test = testService.findById(id);
         return new ResponseEntity<>(test, HttpStatus.OK);
     }
 

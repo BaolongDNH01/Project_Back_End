@@ -1,9 +1,7 @@
 package com.c0220h1_project.controller;
 
 import com.c0220h1_project.model.Exam;
-import com.c0220h1_project.model.test.Test;
 import com.c0220h1_project.service.exam.ExamService;
-import com.c0220h1_project.service.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

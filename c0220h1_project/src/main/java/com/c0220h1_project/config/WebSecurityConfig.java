@@ -1,5 +1,6 @@
 package com.c0220h1_project.config;
 
+import com.c0220h1_project.model.Exam;
 import com.c0220h1_project.model.Role;
 import com.c0220h1_project.model.user.User;
 import com.c0220h1_project.model.constant.ERoleName;
@@ -24,7 +25,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Configuration
@@ -79,6 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 roleRepository.save(memberRole);
 
                 Set<Role> roles = new HashSet<>();
+                List<Exam> examList = new ArrayList<>();
                 roles.add(roleRepository.findByRoleName(ERoleName.ROLE_ADMIN).orElseThrow(
                     () -> new RuntimeException("Role doesn't exist")
                 ));
@@ -88,15 +92,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 }
 
                 User admin = new User(
-                    adminUsername,
-                    passwordEncoder.encode(adminPassword),
-                    "ADMIN",
-                    "admin@gmail.com",
-                    "Da Nang",
-                    "0123456799",
-                    null,
-                    roles,
-                        examList);
+//                    adminUsername,
+//                    passwordEncoder.encode(adminPassword),
+//                    "ADMIN",
+//                    "admin@gmail.com",
+//                    "Da Nang",
+//                    "0123456799",
+//                    null,
+//                     roles,
+//                        examList
+                );
+                admin.setUsername(adminUsername);
+                admin.setUserPassword(passwordEncoder.encode(adminPassword));
+                admin.setFullName("ADMIN");
+                admin.setEmail("admin@gmail.com");
+                admin.setAddress("Da Nang");
+                admin.setPhoneNumber("0123456799");
+                admin.setAvatar(" ");
+                admin.setRoles(roles);
+                admin.setExamList(examList);
+
                 userRepository.save(admin);
 
                 Set<Role> rolesForMember = new HashSet<>();
@@ -105,15 +120,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ));
 
                 User member = new User(
-                        "membertest",
-                        passwordEncoder.encode("123123"),
-                        "MEMBER",
-                        "member@gmail.com",
-                        "Da Nang",
-                        "0998283831",
-                        null,
-                        rolesForMember,
-                        examList);
+//                        "membertest",
+//                        passwordEncoder.encode("123123"),
+//                        "MEMBER",
+//                        "member@gmail.com",
+//                        "Da Nang",
+//                        "0998283831",
+//                        null,
+//                        rolesForMember,
+//                        examList
+                );
+                member.setUsername("membertest");
+                member.setUserPassword(passwordEncoder.encode("123123"));
+                member.setFullName("MEMBER");
+                member.setEmail("member@gmail.com");
+                member.setAddress("Da Nang");
+                member.setPhoneNumber("0998283831");
+                member.setAvatar(" ");
+                member.setRoles(roles);
+                member.setExamList(examList);
                 userRepository.save(member);
             }
         };

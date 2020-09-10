@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -32,23 +33,21 @@ public class QuestionResControl {
     }
 
     @PostMapping(value = "/create-question")
-    public ResponseEntity<Void> createQuestion(@RequestBody QuestionDto questionDto, UriComponentsBuilder builder){
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> createQuestion(@RequestBody QuestionDto questionDto, UriComponentsBuilder builder){
         questionService.save(questionDto);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/question/{id}").buildAndExpand(questionDto.getQuestionId()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>("Create", HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/update-question/{id}")
-    public ResponseEntity<Void> updateQuestion(@PathVariable String id, @RequestBody QuestionDto questionDtoForm){
-        try {
-        }catch (Exception a){
-            questionDtoForm.setTestId((Set<Integer>) questionDtoForm.getTestId());
-        }
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> updateQuestion(@PathVariable String id, @RequestBody QuestionDto questionDtoForm){
         Question question = questionService.findByIdQuestion(id);
         questionDtoForm.setQuestionId(question.getQuestionId());
         questionService.save(questionDtoForm);
-        return new ResponseEntity<>( HttpStatus.OK);
+        return new ResponseEntity<>("Update", HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/delete-question/{id}")

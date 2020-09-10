@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "Exam")
 public class Exam {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer examId;
     @NotEmpty
     private String examDate;

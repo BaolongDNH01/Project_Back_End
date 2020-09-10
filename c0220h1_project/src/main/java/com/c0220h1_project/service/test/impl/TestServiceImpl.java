@@ -80,7 +80,9 @@ public class TestServiceImpl implements TestService {
         System.out.println(testName);
         if (testName.length() > 51) {
             return "import unsuccessful, name too long";
-        } else {
+        } else if (testName.length() < 4) {
+            return "import unsuccessful, name too long";
+        }else {
             test.setTestName(testName);
         }
 
@@ -118,19 +120,26 @@ public class TestServiceImpl implements TestService {
 //        thêm câu hỏi
         Set<Question> questionSet = new HashSet<>();
         Integer totalQuestion = 0;
-        for (int i = 4; i < 64; i += 6) {
-            Question question = new Question();
-            String idQuestion = geneRandomId();
-            question.setQuestionId(idQuestion);
-            question.setQuestion(arrData.get(i));
-            question.setAnswerA(arrData.get(i + 1));
-            question.setAnswerB(arrData.get(i + 2));
-            question.setAnswerC(arrData.get(i + 3));
-            question.setAnswerD(arrData.get(i + 4));
-            question.setRightAnswer(arrData.get(i + 5));
-            question.setSubject(subject);
-            questionRepository.save(question);
-            questionSet.add(questionRepository.findById(idQuestion).orElse(null));
+        for (int i = 4; i < arrData.size(); i += 6) {
+            if(questionRepository.findQuestionByQuestionName(arrData.get(i)) == null){
+                Question question = new Question();
+                String idQuestion = geneRandomId();
+                question.setQuestionId(idQuestion);
+                question.setQuestion(arrData.get(i));
+                question.setAnswerA(arrData.get(i + 1));
+                question.setAnswerB(arrData.get(i + 2));
+                question.setAnswerC(arrData.get(i + 3));
+                question.setAnswerD(arrData.get(i + 4));
+                question.setRightAnswer(arrData.get(i + 5));
+                question.setSubject(subject);
+                questionRepository.save(question);
+                question = questionRepository.findById(idQuestion).orElse(null);
+                if(question != null){
+                    questionSet.add(question);
+                }
+            }else {
+                questionSet.add(questionRepository.findQuestionByQuestionName(arrData.get(i)));
+            }
             totalQuestion += 1;
         }
 //        kiểm tra xem đã đủ 10 câu chưa rồi add thêm

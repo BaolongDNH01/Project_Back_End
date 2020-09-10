@@ -51,7 +51,7 @@ public class TestResControl {
     }
 
 
-    @PostMapping("deleteTest")
+    @PostMapping("/deleteTest")
     public void deleteFile(@RequestBody Integer[] ids){
         System.out.println(ids);
         testService.deleteById(ids);

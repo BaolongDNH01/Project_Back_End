@@ -19,7 +19,7 @@ public class Exam {
     @NotEmpty
     private Double mark;
     @NotEmpty
-    private String[] answer;
+    private String answer;
     @NotEmpty
     private Integer times;
     @ManyToOne
@@ -37,7 +37,7 @@ public class Exam {
     public Exam() {
     }
 
-    public Exam(Integer examId, String examDate, Double mark, String[] answer, Integer times) {
+    public Exam(Integer examId, String examDate, Double mark, String answer, Integer times) {
         this.examId = examId;
         this.examDate = examDate;
         this.mark = mark;
@@ -77,11 +77,11 @@ public class Exam {
         this.mark = mark;
     }
 
-    public String[] getAnswer() {
+    public String getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String[] answer) {
+    public void setAnswer(String answer) {
         this.answer = answer;
     }
 

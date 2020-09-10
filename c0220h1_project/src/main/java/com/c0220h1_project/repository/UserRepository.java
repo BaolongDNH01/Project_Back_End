@@ -12,5 +12,5 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     User findTopByOrderByIdDesc();
 
     Optional<User> findByUsername(String username);
-    
+
 }

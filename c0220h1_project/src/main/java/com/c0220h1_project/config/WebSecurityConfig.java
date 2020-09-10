@@ -66,32 +66,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    ApplicationRunner init(RoleRepository roleRepository, UserRepository userRepository) {
-        System.out.println("Created !");
-        return args -> {
-            if (roleRepository.findAll().size() == 0) {
-
-                Role adminRole = new Role(ERoleName.ROLE_ADMIN);
-                adminRole.setId(1);
-
-                Role memberRole = new Role(ERoleName.ROLE_MEMBER);
-                memberRole.setId(2);
-
-                roleRepository.save(adminRole);
-                roleRepository.save(memberRole);
-
-                Set<Role> roles = new HashSet<>();
-                List<Exam> examList = new ArrayList<>();
-                roles.add(roleRepository.findByRoleName(ERoleName.ROLE_ADMIN).orElseThrow(
-                    () -> new RuntimeException("Role doesn't exist")
-                ));
-
-                for (Role role: roles) {
-                    System.out.println(role.getRoleName());
-                }
-
-                User admin = new User(
+//    @Bean
+//    ApplicationRunner init(RoleRepository roleRepository, UserRepository userRepository) {
+//        System.out.println("Created !");
+//        return args -> {
+//            if (roleRepository.findAll().size() == 0) {
+//
+//                Role adminRole = new Role(ERoleName.ROLE_ADMIN);
+//                adminRole.setId(1);
+//
+//                Role memberRole = new Role(ERoleName.ROLE_MEMBER);
+//                memberRole.setId(2);
+//
+//                roleRepository.save(adminRole);
+//                roleRepository.save(memberRole);
+//
+//                Set<Role> roles = new HashSet<>();
+//                List<Exam> examList = new ArrayList<>();
+//                roles.add(roleRepository.findByRoleName(ERoleName.ROLE_ADMIN).orElseThrow(
+//                    () -> new RuntimeException("Role doesn't exist")
+//                ));
+//
+//                for (Role role: roles) {
+//                    System.out.println(role.getRoleName());
+//                }
+//
+//                User admin = new User(
 //                    adminUsername,
 //                    passwordEncoder.encode(adminPassword),
 //                    "ADMIN",
@@ -101,25 +101,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                    null,
 //                     roles,
 //                        examList
-                );
-                admin.setUsername(adminUsername);
-                admin.setUserPassword(passwordEncoder.encode(adminPassword));
-                admin.setFullName("ADMIN");
-                admin.setEmail("admin@gmail.com");
-                admin.setAddress("Da Nang");
-                admin.setPhoneNumber("0123456799");
-                admin.setAvatar(" ");
-                admin.setRoles(roles);
-                admin.setExamList(examList);
-
-                userRepository.save(admin);
-
-                Set<Role> rolesForMember = new HashSet<>();
-                rolesForMember.add(roleRepository.findByRoleName(ERoleName.ROLE_MEMBER).orElseThrow(
-                        () -> new RuntimeException("Role doesn't exist")
-                ));
-
-                User member = new User(
+//                );
+////                admin.setUsername(adminUsername);
+////                admin.setUserPassword(passwordEncoder.encode(adminPassword));
+////                admin.setFullName("ADMIN");
+////                admin.setEmail("admin@gmail.com");
+////                admin.setAddress("Da Nang");
+////                admin.setPhoneNumber("0123456799");
+////                admin.setAvatar(null);
+////                admin.setRoles(roles);
+////                admin.setExamList(examList);
+//
+//                userRepository.save(admin);
+//
+//                Set<Role> rolesForMember = new HashSet<>();
+//                rolesForMember.add(roleRepository.findByRoleName(ERoleName.ROLE_MEMBER).orElseThrow(
+//                        () -> new RuntimeException("Role doesn't exist")
+//                ));
+//
+//                User member = new User(
 //                        "membertest",
 //                        passwordEncoder.encode("123123"),
 //                        "MEMBER",
@@ -129,20 +129,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                        null,
 //                        rolesForMember,
 //                        examList
-                );
-                member.setUsername("membertest");
-                member.setUserPassword(passwordEncoder.encode("123123"));
-                member.setFullName("MEMBER");
-                member.setEmail("member@gmail.com");
-                member.setAddress("Da Nang");
-                member.setPhoneNumber("0998283831");
-                member.setAvatar(" ");
-                member.setRoles(roles);
-                member.setExamList(examList);
-                userRepository.save(member);
-            }
-        };
-    }
+//                );
+////                member.setUsername("membertest");
+////                member.setUserPassword(passwordEncoder.encode("123123"));
+////                member.setFullName("MEMBER");
+////                member.setEmail("member@gmail.com");
+////                member.setAddress("Da Nang");
+////                member.setPhoneNumber("0998283831");
+////                member.setAvatar(null);
+////                member.setRoles(rolesForMember);
+////                member.setExamList(examList);
+//                userRepository.save(member);
+//            }
+//        };
+//    }
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {

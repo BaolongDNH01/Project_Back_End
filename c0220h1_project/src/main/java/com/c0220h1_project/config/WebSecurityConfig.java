@@ -95,8 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     "Da Nang",
                     "0123456799",
                     null,
-                    roles,
-                        examList);
+                    roles);
                 userRepository.save(admin);
 
                 Set<Role> rolesForMember = new HashSet<>();
@@ -112,8 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "Da Nang",
                         "0998283831",
                         null,
-                        rolesForMember,
-                        examList);
+                        rolesForMember);
                 userRepository.save(member);
             }
         };

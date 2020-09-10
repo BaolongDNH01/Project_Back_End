@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
     Boolean save(User user);
 
-//    void save(User user);
+    void edit(User user);
 
     Boolean findByUsername(String username);
 

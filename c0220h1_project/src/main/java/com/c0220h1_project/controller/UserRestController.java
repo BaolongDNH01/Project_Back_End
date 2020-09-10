@@ -140,12 +140,7 @@ public class UserRestController {
         currentUser.setEmail(user.getEmail());
         currentUser.setAddress(user.getAddress());
         currentUser.setPhoneNumber(user.getPhoneNumber());
-        userService.save(currentUser);
-//        URI location = ServletUriComponentsBuilder
-//                .fromCurrentRequest()
-//                .path("/{id}")
-//                .buildAndExpand(currentUser.getId()).toUri();
-//        return ResponseEntity.created(location).body(currentUser);
+        userService.edit(currentUser);
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 
@@ -161,7 +156,7 @@ public class UserRestController {
             return new ResponseEntity<>(new ApiResponse(false, "The password is incorrect!"), HttpStatus.BAD_REQUEST);
         }
         user.setUsername(encoder.encode(updatePasswordToken.getNewPassword()));
-        userService.save(user);
+        userService.edit(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -170,22 +165,9 @@ public class UserRestController {
     @GetMapping(value = "/history/{id}")
     public ResponseEntity<Object> getTestHistory(@PathVariable("id") Integer id) {
         List<Exam> exams = examService.findByUserId(id);
-//        double sum = 0;
-//        double avg;
-//        int count = 0;
         if (exams == null) {
             return new ResponseEntity<>(new ApiResponse(false, NOT_FOUND_EXAMS), HttpStatus.NOT_FOUND);
         }
-//        else {
-//            for (Exam exam : exams) {
-//                 exam.getTest().getTestName();
-//                 exam.getMark();
-//                 exam.getExamDate();
-//                sum = sum + exam.getMark();
-//                count += 1;
-//            }
-//            avg = sum / count;
-//        }
         return new ResponseEntity<>(exams, HttpStatus.OK);
     }
 

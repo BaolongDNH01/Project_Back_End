@@ -57,7 +57,7 @@ public class QuestionResControl {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("uploadFile")
+    @PostMapping("/uploadFileQuestion")
     public void upload(@RequestParam("file") MultipartFile file) throws IOException {
         String content = new String(file.getBytes(), StandardCharsets.UTF_8);
         String[] arrData = content.split("\n");

@@ -1,6 +1,6 @@
 package com.c0220h1_project.controller;
 
-import com.c0220h1_project.model.test.Test;
+import com.c0220h1_project.model.login_msg.response.ResponseMessage;
 import com.c0220h1_project.model.test.TestDto;
 import com.c0220h1_project.repository.SubjectRepository;
 import com.c0220h1_project.service.test.TestService;
@@ -36,24 +36,31 @@ public class TestResControl {
     }
 
     @PostMapping("/addTest")
-    public ResponseEntity<String> addTest(@RequestBody TestDto test){
-        return new ResponseEntity<>(testService.save(test), HttpStatus.OK);
+    public ResponseEntity<ResponseMessage> addTest(@RequestBody TestDto test){
+        ResponseMessage responseMessage = new ResponseMessage();
+        responseMessage.setMessage(testService.save(test));
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
 
     @PostMapping("/importTest")
-    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) throws IOException{
-        String content = new String(file.getBytes(), StandardCharsets.UTF_8);
+    public ResponseEntity<ResponseMessage> upload(@RequestParam("file") MultipartFile file){
+        String content = "";
+        try {
+            content = new String(file.getBytes(), StandardCharsets.UTF_8);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         String[] arrData = content.split("\n");
-        String message = testService.importFile(arrData);
-        System.out.println(message);
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        ResponseMessage responseMessage = new ResponseMessage();
+        responseMessage.setMessage(testService.importFile(arrData));
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 
 
     @PostMapping("/deleteTest")
     public void deleteFile(@RequestBody Integer[] ids){
-        System.out.println(ids);
         testService.deleteById(ids);
     }
 }

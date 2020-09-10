@@ -142,4 +142,17 @@ public class User  {
         this.examList = examList;
     }
 
+    public User(@NotBlank String username, @NotBlank String userPassword, @NotBlank String fullName, @NotBlank String email, @NotBlank String address, @NotBlank String phoneNumber, String avatar, Set<Role> roles) {
+        this.username = username;
+        this.userPassword = userPassword;
+        this.fullName = fullName;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.avatar = avatar;
+        this.roles = roles;
+    }
+
+    public User() {
+    }
 }

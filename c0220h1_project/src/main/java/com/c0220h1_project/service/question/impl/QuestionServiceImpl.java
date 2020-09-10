@@ -97,7 +97,8 @@ public class QuestionServiceImpl implements QuestionService {
         List<String> arrDataTrim = new ArrayList<>();
         for (String data : arrData) {
             if (!data.equals("")) {
-                arrDataTrim.add(data);
+                String dataTrim = data.trim();
+                arrDataTrim.add(dataTrim);
             }
         }
         if (arrDataTrim.size() > 100) {
@@ -173,16 +174,8 @@ public class QuestionServiceImpl implements QuestionService {
         String testSubject = arrData.get(7);
         Subject subject = null;
         System.out.println(testSubject);
-        if(testSubject.equals("toan")){
-            subject = subjectRepository.findById(1).orElse(null);
-            System.out.println("ở đây");
-        }else if (testSubject.equals("ly")) {
-            subject = subjectRepository.findById(2).orElse(null);
-        }else if (testSubject.equals("hoa")) {
-            subject = subjectRepository.findById(3).orElse(null);
-        }else if (testSubject.equals("anh")) {
-            subject = subjectRepository.findById(4).orElse(null);
-        }
+        subject = subjectRepository.findSubjectBySubjectName(testSubject);
+
         questionCheck.setSubject(subject);
 
         System.out.println(subject);

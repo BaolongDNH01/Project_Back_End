@@ -3,7 +3,6 @@ import com.c0220h1_project.model.Subject;
 import com.c0220h1_project.model.test.Test;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -12,13 +11,13 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
-public class Question {
+public class Question{
     @Id
     private String questionId;
 
     @NotEmpty
     @Size(min = 1, max = 255)
-    private String question;
+    private String questionName;
 
     @NotEmpty
     @Size(min = 1, max = 255)
@@ -51,8 +50,7 @@ public class Question {
 
     private Subject subject;
 
-    public Question() {
-    }
+
 
     public String getQuestionId() {
         return questionId;
@@ -63,11 +61,11 @@ public class Question {
     }
 
     public String getQuestion() {
-        return question;
+        return questionName;
     }
 
     public void setQuestion(String question) {
-        this.question = question;
+        this.questionName = question;
     }
 
     public String getAnswerA() {

@@ -21,17 +21,17 @@ import java.util.Set;
 public class QuestionResControl {
     @Autowired
     QuestionService questionService;
-    @RequestMapping(value = "/question", method = RequestMethod.GET)
+    @GetMapping(value = "/question")
     public ResponseEntity<List<QuestionDto>> getListQuestion(){
         return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/question/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/question/{id}")
     public ResponseEntity<QuestionDto> getQuestion(@PathVariable String id){
         return new ResponseEntity<>(questionService.findById(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/create-question", method = RequestMethod.POST)
+    @PostMapping(value = "/create-question")
     public ResponseEntity<Void> createQuestion(@RequestBody QuestionDto questionDto, UriComponentsBuilder builder){
         questionService.save(questionDto);
         HttpHeaders headers = new HttpHeaders();
@@ -39,7 +39,7 @@ public class QuestionResControl {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/update-question/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/update-question/{id}")
     public ResponseEntity<Void> updateQuestion(@PathVariable String id, @RequestBody QuestionDto questionDtoForm){
         try {
         }catch (Exception a){
@@ -51,7 +51,7 @@ public class QuestionResControl {
         return new ResponseEntity<>( HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete-question/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/delete-question/{id}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable String id){
         questionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

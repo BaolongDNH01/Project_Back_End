@@ -111,6 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 admin.setAvatar(" ");
                 admin.setRoles(roles);
                 admin.setExamList(examList);
+
                 userRepository.save(admin);
 
                 Set<Role> rolesForMember = new HashSet<>();

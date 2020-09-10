@@ -86,8 +86,6 @@ public class QuestionDto {
         this.subjectId = subjectId;
     }
 
-    public QuestionDto() {
-    }
 
 
 }

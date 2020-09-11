@@ -127,6 +127,12 @@ public class UserRestController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getTotalUser")
+    public ResponseEntity<Integer> findTotalUser(){
+        List<User> userList = userService.findAll();
+        return new ResponseEntity<>(userList.size(), HttpStatus.OK);
+    }
+
 //    tinh - update user
 
     @PatchMapping(value = "update-user/{id}")

@@ -3,6 +3,7 @@ package com.c0220h1_project.model.user;
 import com.c0220h1_project.model.Exam;
 import com.c0220h1_project.model.Role;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -49,13 +50,26 @@ public class User  {
 
     private String avatar;
 
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable (
         name ="user_role",
         joinColumns = @JoinColumn(name="user_id"),
         inverseJoinColumns = @JoinColumn(name="role_id")
     )
+    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
+
+    public User(@NotBlank String username, @NotBlank String userPassword, @NotBlank String fullName, @NotBlank String email, @NotBlank String address, @NotBlank String phoneNumber, String avatar, Set<Role> roles, List<Exam> examList) {
+        this.username = username;
+        this.userPassword = userPassword;
+        this.fullName = fullName;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.avatar = avatar;
+        this.roles = roles;
+        this.examList = examList;
+    }
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference

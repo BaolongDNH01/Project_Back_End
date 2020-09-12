@@ -33,12 +33,16 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public List<TestDto> findAll() {
-        List<TestDto> testDtoList = testRepository.findAll().stream().map(this::convertToTestDto).collect(Collectors.toList());
-        return testDtoList;
+        return testRepository.findAll().stream().map(this::convertToTestDto).collect(Collectors.toList());
     }
 
     @Override
-    public Test findById(int testId) {
+    public TestDto findById(int testId) {
+        return testRepository.findById(testId).map(this::convertToTestDto).orElse(null);
+    }
+
+    @Override
+    public Test findByIdReturnTest(int testId) {
         return testRepository.findById(testId).orElse(null);
     }
 
@@ -60,7 +64,7 @@ public class TestServiceImpl implements TestService {
             }
         }
         if (arrDataTrim.size() > 64) {
-            return "can't import file(data more than 64 rows)";
+            return "can't import file(data more than 64 rows)!";
         } else {
            message = checkValidFile(arrDataTrim);
         }
@@ -72,10 +76,13 @@ public class TestServiceImpl implements TestService {
 
 //        check và thêm tên đề thi
         String testName = arrData.get(0);
-        System.out.println(testName);
-        if (testName.length() > 51) {
-            return "import unsuccessful, name too long";
-        } else {
+        if(testRepository.existsTestByTestName(testName)){
+            return "import unsuccessful, name existed!";
+        } else if (testName.length() > 51) {
+            return "import unsuccessful, name too long!";
+        } else if (testName.length() < 4) {
+            return "import unsuccessful, name too long!";
+        }else {
             test.setTestName(testName);
         }
 
@@ -83,49 +90,52 @@ public class TestServiceImpl implements TestService {
 
         String testSubject = arrData.get(1);
         Subject subject = null;
-        System.out.println(testSubject);
         subject = subjectRepository.findSubjectBySubjectName(testSubject);
-        System.out.println(subject);
         if(subject == null){
-            return "import unsuccessful, subject is not exist";
+            return "import unsuccessful, subject is not exist!";
         }
         test.setSubject(subject);
 
 
 //        thêm mã đề
         String testCode = arrData.get(2);
-        System.out.println(testCode);
         if (testCode.length() > 5) {
-            return "import unsuccessful, test code must be less than 6 character";
+            return "import unsuccessful, test code must be less than 6 character!";
         } else {
             test.setTestCode(testCode);
         }
 
 //      thêm khối thi
         String testGrade = arrData.get(3);
-        System.out.println(testGrade);
         if (testGrade.length() > 3) {
-            return "import unsuccessful, grade must be less than 4 character";
+            return "import unsuccessful, grade must be less than 4 character!";
         } else {
             test.setGrade(testGrade);
         }
 
 //        thêm câu hỏi
         Set<Question> questionSet = new HashSet<>();
-        Integer totalQuestion = 0;
-        for (int i = 4; i < 64; i += 6) {
-            Question question = new Question();
-            String idQuestion = geneRandomId();
-            question.setQuestionId(idQuestion);
-            question.setQuestion(arrData.get(i));
-            question.setAnswerA(arrData.get(i + 1));
-            question.setAnswerB(arrData.get(i + 2));
-            question.setAnswerC(arrData.get(i + 3));
-            question.setAnswerD(arrData.get(i + 4));
-            question.setRightAnswer(arrData.get(i + 5));
-            question.setSubject(subject);
-            questionRepository.save(question);
-            questionSet.add(questionRepository.findById(idQuestion).orElse(null));
+        int totalQuestion = 0;
+        for (int i = 4; i < arrData.size(); i += 6) {
+            if(questionRepository.findQuestionByQuestionName(arrData.get(i)) == null){
+                Question question = new Question();
+                String idQuestion = geneRandomId();
+                question.setQuestionId(idQuestion);
+                question.setQuestion(arrData.get(i));
+                question.setAnswerA(arrData.get(i + 1));
+                question.setAnswerB(arrData.get(i + 2));
+                question.setAnswerC(arrData.get(i + 3));
+                question.setAnswerD(arrData.get(i + 4));
+                question.setRightAnswer(arrData.get(i + 5));
+                question.setSubject(subject);
+                questionRepository.save(question);
+                question = questionRepository.findById(idQuestion).orElse(null);
+                if(question != null){
+                    questionSet.add(question);
+                }
+            }else {
+                questionSet.add(questionRepository.findQuestionByQuestionName(arrData.get(i)));
+            }
             totalQuestion += 1;
         }
 //        kiểm tra xem đã đủ 10 câu chưa rồi add thêm
@@ -139,13 +149,13 @@ public class TestServiceImpl implements TestService {
             }else {
                 questionSet.addAll(questions);
                 test.setQuestions(questionSet);
-                return "import successful, file not enough question then automatically add questions from system";
+                testRepository.save(test);
+                return "import successful, file not enough question then automatically add questions from system!";
             }
         }
         test.setQuestions(questionSet);
-        System.out.println(test);
         testRepository.save(test);
-        return "import successful";
+        return "import successful!";
     }
 
 
@@ -165,13 +175,13 @@ public class TestServiceImpl implements TestService {
 
             if (!testRepository.existsTestByTestName(test.getTestName())) {
                 test1.setTestName(test.getTestName());
-            } else return "add unsuccessful, name test existed";
+            } else return "add unsuccessful, name test existed!";
 
             test1.setGrade(test.getGrade());
 
             Subject subject = subjectRepository.findById(test.getSubjectId()).orElse(null);
             if (subject == null) {
-                return "add unsuccessful, subject not existed";
+                return "add unsuccessful, subject not existed!";
             } else test1.setSubject(subject);
 
             test1.setQuestions(getRandomQuestion(test1));
@@ -180,7 +190,7 @@ public class TestServiceImpl implements TestService {
 
             testRepository.save(test1);
 
-            return "add successful";
+            return "add successful!";
         }
 
         private Set<Question> getRandomQuestion (Test test1){

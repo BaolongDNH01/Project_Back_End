@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
         user.setUserPassword(userDto.getUserPassword());
         user.setFullName(userDto.getFullName());
         user.setAddress(userDto.getAddress());
-        user.setEmail(userDto.getAddress());
+        user.setEmail(userDto.getEmail()); // THIEN FIXED
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setAvatar(userDto.getAvatar());
         user.setExamList(new ArrayList<>());

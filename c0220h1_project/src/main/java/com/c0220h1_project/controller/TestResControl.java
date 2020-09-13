@@ -30,13 +30,13 @@ public class TestResControl {
     }
 
     @GetMapping("/getTestById/{id}")
-    public ResponseEntity<TestDto> getTestById(@PathVariable Integer id){
+    public ResponseEntity<TestDto> getTestById(@PathVariable Integer id) {
         TestDto test = testService.findById(id);
         return new ResponseEntity<>(test, HttpStatus.OK);
     }
 
     @PostMapping("/addTest")
-    public ResponseEntity<ResponseMessage> addTest(@RequestBody TestDto test){
+    public ResponseEntity<ResponseMessage> addTest(@RequestBody TestDto test) {
         ResponseMessage responseMessage = new ResponseMessage();
         responseMessage.setMessage(testService.save(test));
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
@@ -44,11 +44,11 @@ public class TestResControl {
 
 
     @PostMapping("/importTest")
-    public ResponseEntity<ResponseMessage> upload(@RequestParam("file") MultipartFile file){
+    public ResponseEntity<ResponseMessage> upload(@RequestParam("file") MultipartFile file) {
         String content = "";
         try {
             content = new String(file.getBytes(), StandardCharsets.UTF_8);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -60,7 +60,15 @@ public class TestResControl {
 
 
     @PostMapping("/deleteTest")
-    public void deleteFile(@RequestBody Integer[] ids){
+    public void deleteFile(@RequestBody Integer[] ids) {
         testService.deleteById(ids);
     }
+
+    @PostMapping("/updateTest")
+    public ResponseEntity<ResponseMessage> updateTest(@RequestBody Integer id, @RequestBody String[] questionIds) {
+        ResponseMessage responseMessage = new ResponseMessage();
+        responseMessage.setMessage(testService.updateTest(id, questionIds));
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    }
+
 }

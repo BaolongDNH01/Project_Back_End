@@ -208,6 +208,30 @@ public class TestServiceImpl implements TestService {
             return questionSet;
         }
 
+    @Override
+    public String updateTest(Integer id, String[] questionId) {
+        Test test;
+        if (testRepository.findById(id).orElse(null) != null) {
+            test = testRepository.findById(id).orElse(new Test());
+        } else {
+            return "can not update, test is not exist!";
+        }
+
+        Set<Question> questionList = new HashSet<>();
+        for (String i : questionId) {
+            if (questionRepository.findById(i).orElse(null) != null) {
+                questionList.add(questionRepository.findById(i).orElse(new Question()));
+            } else {
+                return "can not update, one or more question is not exist!";
+            }
+        }
+
+        System.out.println(questionList);
+        test.setQuestions(questionList);
+        testRepository.save(test);
+        return "update successful!";
+    }
+
         private TestDto convertToTestDto (Test test){
             TestDto testDto = new TestDto();
 

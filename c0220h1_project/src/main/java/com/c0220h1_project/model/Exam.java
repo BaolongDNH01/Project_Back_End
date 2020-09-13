@@ -24,25 +24,27 @@ public class Exam {
     private Integer times;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+//    @JsonBackReference
     @JsonIdentityReference(alwaysAsId = true)
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "test_id")
-    @JsonBackReference
+//    @JsonBackReference
     @JsonIdentityReference(alwaysAsId = true)
     private Test test;
 
     public Exam() {
     }
 
-    public Exam(Integer examId, String examDate, Double mark, String answer, Integer times) {
+    public Exam(Integer examId, String examDate, Double mark, String answer, Integer times, User user, Test test) {
         this.examId = examId;
         this.examDate = examDate;
         this.mark = mark;
         this.answer = answer;
         this.times = times;
+        this.test = test;
+        this.user = user;
     }
 
     public Integer getTimes() {

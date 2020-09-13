@@ -65,9 +65,9 @@ public class TestResControl {
     }
 
     @PostMapping("/updateTest")
-    public ResponseEntity<ResponseMessage> updateTest(@RequestBody Integer id, @RequestBody String[] questionIds) {
+    public ResponseEntity<ResponseMessage> updateTest(@RequestBody String[] questionIdsAndIdTest) {
         ResponseMessage responseMessage = new ResponseMessage();
-        responseMessage.setMessage(testService.updateTest(id, questionIds));
+        responseMessage.setMessage(testService.updateTest(questionIdsAndIdTest));
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 

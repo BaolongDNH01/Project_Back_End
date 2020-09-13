@@ -81,7 +81,7 @@ public class QuestionServiceImpl implements QuestionService {
         question.setSubject(subjectService.findById(questionDto.getSubjectId()));
         Set<Test> tests = new HashSet<>();
         for (int id : questionDto.getTestId()) {
-            tests.add(testService.findById(id));
+            tests.add(testService.findByIdReturnTest(id));
         }
         question.setTests(tests);
         questionRepository.save(question);

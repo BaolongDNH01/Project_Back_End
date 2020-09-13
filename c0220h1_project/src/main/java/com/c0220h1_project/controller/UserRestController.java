@@ -111,8 +111,11 @@ public class UserRestController {
         JwtResponse response = new JwtResponse(
                 token,
                 userPrincipal.getUsername(),
+                userPrincipal.getEmail(),
+                userPrincipal.getAvatar(),
                 userPrincipal.getAuthorities()
         );
+        System.out.println(response);
         return ResponseEntity.ok(response);
     }
 

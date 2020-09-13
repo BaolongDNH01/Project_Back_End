@@ -114,7 +114,7 @@ public class TestServiceImpl implements TestService {
         }
 
 //        thêm câu hỏi
-        Set<Question> questionSet = new HashSet<>();
+        List<Question> questionSet = new ArrayList<>();
         int totalQuestion = 0;
         for (int i = 4; i < arrData.size(); i += 6) {
             if(questionRepository.findQuestionByQuestionName(arrData.get(i)) == null){
@@ -193,9 +193,9 @@ public class TestServiceImpl implements TestService {
             return "add successful!";
         }
 
-        private Set<Question> getRandomQuestion (Test test1){
+        private List<Question> getRandomQuestion (Test test1){
             List<Question> questions = new ArrayList<>();
-            Set<Question> questionSet = new HashSet<>();
+            List<Question> questionSet = new ArrayList<>();
             questions = questionRepository.findQuestionsBySubject(test1.getSubject());
             if (questions.size() >= 10) {
                 for (int i = 0; i < 10; i++) {
@@ -209,24 +209,24 @@ public class TestServiceImpl implements TestService {
         }
 
     @Override
-    public String updateTest(Integer id, String[] questionId) {
+    public String updateTest(String[] arr) {
         Test test;
-        if (testRepository.findById(id).orElse(null) != null) {
-            test = testRepository.findById(id).orElse(new Test());
+        if (testRepository.findById(Integer.valueOf(arr[arr.length - 1])).orElse(null) != null) {
+            test = testRepository.findById(Integer.valueOf(arr[arr.length - 1])).orElse(new Test());
         } else {
             return "can not update, test is not exist!";
         }
 
-        Set<Question> questionList = new HashSet<>();
-        for (String i : questionId) {
-            if (questionRepository.findById(i).orElse(null) != null) {
-                questionList.add(questionRepository.findById(i).orElse(new Question()));
-            } else {
-                return "can not update, one or more question is not exist!";
+        List<Question> questionList = new ArrayList<>();
+        questionList = test.getQuestions();
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = 0; j < questionList.size(); j++) {
+                if (arr[i].equals(questionList.get(j).getQuestionId())) {
+                    questionList.remove(questionList.get(j));
+                }
             }
         }
 
-        System.out.println(questionList);
         test.setQuestions(questionList);
         testRepository.save(test);
         return "update successful!";
@@ -255,8 +255,8 @@ public class TestServiceImpl implements TestService {
             }
             testDto.setExamList(listExamId);
 
-            Set<Question> listQuestion = new HashSet<>();
-            Set<String> listQuestionId = new HashSet<>();
+            List<Question> listQuestion = new ArrayList<>();
+            List<String> listQuestionId = new ArrayList<>();
             listQuestion = test.getQuestions();
             for (Question question : listQuestion) {
                 listQuestionId.add(question.getQuestionId());

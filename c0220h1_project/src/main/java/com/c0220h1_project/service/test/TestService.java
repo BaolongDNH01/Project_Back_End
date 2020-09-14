@@ -15,5 +15,8 @@ public interface TestService {
     Test findByIdReturnTest(int testId);
     void deleteById(Integer[] ids);
     String importFile(String[] data);
-    String updateTest(String[] questionIdsAndIdTestInLast);
+
+
+    String removeQuestionInTest(String[] listQuestionIdAndIdTestInLast);
+    String addQuestionInTest(String[] listQuestionIdAndIdTestInLast);
 }

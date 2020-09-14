@@ -64,10 +64,19 @@ public class TestResControl {
         testService.deleteById(ids);
     }
 
-    @PostMapping("/updateTest")
-    public ResponseEntity<ResponseMessage> updateTest(@RequestBody String[] questionIdsAndIdTest) {
+    @PostMapping("/removeQuestionInTest")
+    public ResponseEntity<ResponseMessage> removeQuestionInTest(@RequestBody String[] questionIdsAndIdTest) {
         ResponseMessage responseMessage = new ResponseMessage();
-        responseMessage.setMessage(testService.updateTest(questionIdsAndIdTest));
+        responseMessage.setMessage(testService.removeQuestionInTest(questionIdsAndIdTest));
+        System.out.println(responseMessage.getMessage());
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    }
+
+    @PostMapping("/addQuestionInTest")
+    public ResponseEntity<ResponseMessage> addQuestionInTest(@RequestBody String[] questionIdsAndIdTest) {
+        ResponseMessage responseMessage = new ResponseMessage();
+        responseMessage.setMessage(testService.addQuestionInTest(questionIdsAndIdTest));
+        System.out.println(responseMessage.getMessage());
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
     }
 

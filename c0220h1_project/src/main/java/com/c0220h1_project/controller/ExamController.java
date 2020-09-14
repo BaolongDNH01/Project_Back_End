@@ -16,7 +16,7 @@ public class ExamController {
     ExamService examService;
 
     @PostMapping("/create-exam")
-    public ResponseEntity<Void> createExam(@RequestBody Exam exam, UriComponentsBuilder builder) {
+    public ResponseEntity<Exam> createExam(@RequestBody Exam exam, UriComponentsBuilder builder) {
         examService.save(exam);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/get-exam/{id}").buildAndExpand(exam.getExamId()).toUri());

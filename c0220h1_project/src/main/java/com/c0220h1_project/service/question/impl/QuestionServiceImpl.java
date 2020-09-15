@@ -92,7 +92,16 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void delete(String questionId) {
-        questionRepository.deleteById(questionId);
+        List<Test> listDeleteQuestionInTest;
+        Question question = questionRepository.findById(questionId).orElse(null);
+        if (question != null){
+            listDeleteQuestionInTest = testRepository.findTestsByQuestionsContaining(question);
+            for (Test test : listDeleteQuestionInTest){
+                    List<Question> questionList = test.getQuestions();
+                    questionList.remove(question);
+            }
+        }
+            questionRepository.deleteById(questionId);
     }
 
     @Override
@@ -114,20 +123,20 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<QuestionDto> getQuestionsToAddToTest(Integer[] ids) {
-       List<Question> listQuestionInExam;
-       List<Question> listQuestionInSubject;
-       Test test = testRepository.findById(ids[0]).get();
-       listQuestionInExam = test.getQuestions();
+        List<Question> listQuestionInExam;
+        List<Question> listQuestionInSubject;
+        Test test = testRepository.findById(ids[0]).get();
+        listQuestionInExam = test.getQuestions();
 
-       Subject subject = subjectRepository.findById(ids[1]).get();
+        Subject subject = subjectRepository.findById(ids[1]).get();
         listQuestionInSubject = questionRepository.findQuestionsBySubject(subject);
-       if (listQuestionInSubject.size() > 0){
-           for (Question question : listQuestionInExam) {
-               listQuestionInSubject.remove(question);
-           }
-       }else {
-           System.out.println("Ko tim thay");
-       }
+        if (listQuestionInSubject.size() > 0) {
+            for (Question question : listQuestionInExam) {
+                listQuestionInSubject.remove(question);
+            }
+        } else {
+            System.out.println("Ko tim thay");
+        }
 
         return listQuestionInSubject.stream().map(this::convertToQuestionDTO).collect(Collectors.toList());
     }
@@ -191,7 +200,6 @@ public class QuestionServiceImpl implements QuestionService {
         } else {
             questionCheck.setRightAnswer(rightAnswer);
         }
-
 
 
         String testSubject = arrData.get(7);

@@ -2,7 +2,6 @@ package com.c0220h1_project.model;
 
 import com.c0220h1_project.model.test.Test;
 import com.c0220h1_project.model.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import javax.persistence.*;
@@ -16,11 +15,9 @@ public class Exam {
     private Integer examId;
     @NotEmpty
     private String examDate;
-    @NotEmpty
     private Double mark;
     @NotEmpty
     private String answer;
-    @NotEmpty
     private Integer times;
     @ManyToOne
     @JoinColumn(name = "user_id")

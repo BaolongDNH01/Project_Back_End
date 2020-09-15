@@ -1,8 +1,11 @@
 package com.c0220h1_project.service.exam.impl;
 
 import com.c0220h1_project.model.Exam;
+import com.c0220h1_project.model.exam.ExamDto;
 import com.c0220h1_project.repository.ExamRepository;
 import com.c0220h1_project.service.exam.ExamService;
+import com.c0220h1_project.service.test.TestService;
+import com.c0220h1_project.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +15,10 @@ import java.util.List;
 public class ExamServiceImpl implements ExamService {
     @Autowired
     ExamRepository examRepository;
-
+    @Autowired
+    UserService userService;
+    @Autowired
+    TestService testService;
     @Override
     public List<Exam> findAll() {
         return examRepository.findAll();
@@ -24,7 +30,14 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public void save(Exam exam) {
+    public void save(ExamDto examDto) {
+        Exam exam = new Exam();
+        exam.setTimes(examDto.getTimes());
+        exam.setMark(examDto.getMark());
+        exam.setExamDate(examDto.getExamDate());
+        exam.setAnswer(examDto.getAnswer());
+        exam.setUser(userService.findById(examDto.getUser()));
+        exam.setTest(testService.findByIdReturnTest(examDto.getTest()));
         examRepository.save(exam);
     }
 

@@ -1,4 +1,5 @@
 package com.c0220h1_project.controller;
+
 import com.c0220h1_project.model.Exam;
 import com.c0220h1_project.model.UserPrincipal;
 import com.c0220h1_project.model.login_msg.request.Login;
@@ -66,27 +67,30 @@ public class UserRestController {
         }
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
+
     @GetMapping("/allUser")
-    public ResponseEntity<List<User>> getAllUser(){
+    public ResponseEntity<List<User>> getAllUser() {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto){
-        if (userService.save(userService.parseDto(userDto))){
-            return new ResponseEntity<>("saved",HttpStatus.OK);
+    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
+        if (Boolean.TRUE.equals(userService.save(userService.parseDto(userDto)))) {
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>("Username already exist",HttpStatus.CONFLICT);
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
-    @GetMapping("/delete-user/{id}")
+    @DeleteMapping("/delete-user/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> deleteUser(@PathVariable Integer id){
-            userService.deleteUser(id);
-            return new ResponseEntity<>("Deleted",HttpStatus.OK);
+    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+        if (Boolean.TRUE.equals(userService.deleteUser(id))) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
+
     @GetMapping("/new-user")
-    public ResponseEntity<User> findUserNew(){
+    public ResponseEntity<User> findUserNew() {
         return new ResponseEntity<>(userService.findTopByOrderByIdDesc(), HttpStatus.OK);
     }
 
@@ -94,7 +98,7 @@ public class UserRestController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody Login loginRequest) throws AuthenticationException {
 
-        Authentication authentication = authManager.authenticate (
+        Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
                         loginRequest.getPassword()
@@ -131,7 +135,7 @@ public class UserRestController {
     }
 
     @GetMapping(value = "/getTotalUser")
-    public ResponseEntity<Integer> findTotalUser(){
+    public ResponseEntity<Integer> findTotalUser() {
         List<User> userList = userService.findAll();
         return new ResponseEntity<>(userList.size(), HttpStatus.OK);
     }

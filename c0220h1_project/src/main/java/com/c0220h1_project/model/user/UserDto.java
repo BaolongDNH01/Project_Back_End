@@ -8,6 +8,11 @@ public class UserDto {
     private Integer id;
     private String username;
     private String userPassword;
+    private String fullName;
+    private String email;
+    private String address;
+    private String phoneNumber;
+    private String avatar;
 
     public String getFullName() {
         return fullName;
@@ -16,12 +21,6 @@ public class UserDto {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-
-    private String fullName;
-    private String email;
-    private String address;
-    private String phoneNumber;
-    private String avatar;
 
     public Integer getId() {
         return id;

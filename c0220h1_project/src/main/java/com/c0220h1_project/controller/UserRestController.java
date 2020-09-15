@@ -74,9 +74,9 @@ public class UserRestController {
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> registerUser(@RequestBody UserDto userDto){
         if (userService.save(userService.parseDto(userDto))){
-            return new ResponseEntity<>("saved",HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>("Username already exist",HttpStatus.CONFLICT);
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
     @GetMapping("/delete-user/{id}")

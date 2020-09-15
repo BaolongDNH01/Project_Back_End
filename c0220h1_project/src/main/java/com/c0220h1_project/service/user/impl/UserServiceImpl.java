@@ -1,9 +1,5 @@
 package com.c0220h1_project.service.user.impl;
-
-
-import com.c0220h1_project.model.Exam;
 import com.c0220h1_project.model.Role;
-import com.c0220h1_project.model.constant.ERoleName;
 import com.c0220h1_project.model.user.User;
 import com.c0220h1_project.model.user.UserDto;
 import com.c0220h1_project.repository.RoleRepository;
@@ -55,8 +51,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Integer id) {
+    public Boolean deleteUser(Integer id) {
+        if (Boolean.FALSE.equals(userRepository.existsById(id))) {
+            return false;
+        }
         userRepository.deleteById(id);
+        return true;
     }
 
     @Override

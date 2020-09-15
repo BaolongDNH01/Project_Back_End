@@ -32,7 +32,7 @@ public class QuestionResControl {
         return new ResponseEntity<>(questionService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/create-question")
+    @PostMapping(value = "/add-question")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> createQuestion(@RequestBody QuestionDto questionDto, UriComponentsBuilder builder){
         questionService.save(questionDto);
@@ -62,5 +62,10 @@ public class QuestionResControl {
         String content = new String(file.getBytes(), StandardCharsets.UTF_8);
         String[] arrData = content.split("\n");
         questionService.importFile(arrData);
+    }
+
+    @GetMapping("getQuestionsToAddToTest/{ids}")
+    public ResponseEntity<List<QuestionDto>> getQuestionToAddToTest(@PathVariable Integer[] ids){
+            return new ResponseEntity<>(questionService.getQuestionsToAddToTest(ids),HttpStatus.OK);
     }
 }

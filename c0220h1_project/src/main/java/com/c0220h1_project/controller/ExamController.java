@@ -1,6 +1,7 @@
 package com.c0220h1_project.controller;
 
 import com.c0220h1_project.model.Exam;
+import com.c0220h1_project.model.exam.ExamDto;
 import com.c0220h1_project.service.exam.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,10 +17,10 @@ public class ExamController {
     ExamService examService;
 
     @PostMapping("/create-exam")
-    public ResponseEntity<Exam> createExam(@RequestBody Exam exam, UriComponentsBuilder builder) {
-        examService.save(exam);
+    public ResponseEntity<Exam> createExam(@RequestBody ExamDto examDto, UriComponentsBuilder builder) {
+        examService.save(examDto);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/get-exam/{id}").buildAndExpand(exam.getExamId()).toUri());
+        headers.setLocation(builder.path("/get-exam/{id}").buildAndExpand(examDto.getExamId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 

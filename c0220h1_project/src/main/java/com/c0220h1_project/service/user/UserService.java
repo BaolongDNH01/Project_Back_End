@@ -14,7 +14,7 @@ public interface UserService {
 
     List<User> findAll();
 
-    void deleteUser(Integer id);
+    Boolean deleteUser(Integer id);
 
     User findTopByOrderByIdDesc();
 

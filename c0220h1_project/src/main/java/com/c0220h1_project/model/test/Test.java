@@ -38,6 +38,10 @@ public class Test {
 
     @JsonBackReference
     @ManyToMany
+    @JoinTable(
+            name = "test_question",
+            joinColumns = @JoinColumn(name = "test_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id"))
     private
     List<Question> questions;
 

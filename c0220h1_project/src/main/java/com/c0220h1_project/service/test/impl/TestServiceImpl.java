@@ -48,8 +48,16 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public void deleteById(Integer[] ids) {
+        List<Exam> examOfTest;
         for (int id : ids) {
-            testRepository.deleteById(id);
+            Test test = testRepository.findById(id).orElse(null);
+            if(test != null){
+                examOfTest = examRepository.findExamsByTest(test);
+                for (Exam e: examOfTest) {
+                    examRepository.delete(e);
+                }
+                testRepository.deleteById(id);
+            }
         }
     }
 
@@ -77,11 +85,11 @@ public class TestServiceImpl implements TestService {
 //        check và thêm tên đề thi
         String testName = arrData.get(0);
         if(testRepository.existsTestByTestName(testName)){
-            return "import unsuccessful, name existed!";
-        } else if (testName.length() > 51) {
-            return "import unsuccessful, name too long!";
-        } else if (testName.length() < 4) {
-            return "import unsuccessful, name too long!";
+            return "import unsuccessful, name test existed!";
+        } else if (testName.length() > 50) {
+            return "import unsuccessful, name test must be less than 51 !";
+        } else if (testName.length() < 3) {
+            return "import unsuccessful, name test must be more than 2 !";
         }else {
             test.setTestName(testName);
         }
@@ -142,9 +150,13 @@ public class TestServiceImpl implements TestService {
         List<Question> questions = questionRepository.findQuestionsBySubject(subject);
         if (totalQuestion - 10 < 0) {
             if (questions.size() > 10 - totalQuestion) {
-                for (int i = 0; i < 10 - totalQuestion; i++) {
+                int i = 0;
+                while (i < 10 - totalQuestion) {
                     Question question = questions.get((int) Math.floor(Math.random() * questions.size()));
-                    questionSet.add(question);
+                    if(!questionSet.contains(question)){
+                        questionSet.add(question);
+                        i++;
+                    }
                 }
             }else {
                 questionSet.addAll(questions);

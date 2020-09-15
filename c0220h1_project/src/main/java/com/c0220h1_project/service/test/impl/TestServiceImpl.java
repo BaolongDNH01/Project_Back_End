@@ -197,10 +197,14 @@ public class TestServiceImpl implements TestService {
             List<Question> questions = new ArrayList<>();
             List<Question> questionSet = new ArrayList<>();
             questions = questionRepository.findQuestionsBySubject(test1.getSubject());
-            if (questions.size() >= 10) {
-                for (int i = 0; i < 10; i++) {
+            if (questions.size() > 10) {
+                int i = 0;
+                while (i < 10) {
                     Question question = questions.get((int) Math.floor(Math.random() * questions.size()));
-                    questionSet.add(question);
+                    if(!questionSet.contains(question)){
+                        questionSet.add(question);
+                        i++;
+                    }
                 }
             } else {
                 questionSet.addAll(questions);
@@ -209,19 +213,19 @@ public class TestServiceImpl implements TestService {
         }
 
     @Override
-    public String updateTest(String[] arr) {
+    public String removeQuestionInTest(String[] listQuesId) {
         Test test;
-        if (testRepository.findById(Integer.valueOf(arr[arr.length - 1])).orElse(null) != null) {
-            test = testRepository.findById(Integer.valueOf(arr[arr.length - 1])).orElse(new Test());
+        if (testRepository.findById(Integer.valueOf(listQuesId[listQuesId.length - 1])).orElse(null) != null) {
+            test = testRepository.findById(Integer.valueOf(listQuesId[listQuesId.length - 1])).orElse(new Test());
         } else {
-            return "can not update, test is not exist!";
+            return "can not add question, test is not exist!";
         }
 
         List<Question> questionList = new ArrayList<>();
         questionList = test.getQuestions();
-        for (int i = 0; i < arr.length - 1; i++) {
+        for (int i = 0; i < listQuesId.length - 1; i++) {
             for (int j = 0; j < questionList.size(); j++) {
-                if (arr[i].equals(questionList.get(j).getQuestionId())) {
+                if (listQuesId[i].equals(questionList.get(j).getQuestionId())) {
                     questionList.remove(questionList.get(j));
                 }
             }
@@ -229,10 +233,32 @@ public class TestServiceImpl implements TestService {
 
         test.setQuestions(questionList);
         testRepository.save(test);
-        return "update successful!";
+        return "remove successful!";
     }
 
-        private TestDto convertToTestDto (Test test){
+    @Override
+    public String addQuestionInTest(String[] listQuesId) {
+        Test test;
+        if (testRepository.findById(Integer.valueOf(listQuesId[listQuesId.length - 1])).orElse(null) != null) {
+            test = testRepository.findById(Integer.valueOf(listQuesId[listQuesId.length - 1])).orElse(new Test());
+        } else {
+            return "can not add question, test is not exist!";
+        }
+
+        List<Question> questionList = new ArrayList<>();
+        questionList = test.getQuestions();
+        for (int i = 0; i < listQuesId.length - 1; i++) {
+            if(questionRepository.findById(listQuesId[i]).orElse(null) != null) {
+                questionList.add(questionRepository.findById(listQuesId[i]).get());
+            }
+        }
+
+        test.setQuestions(questionList);
+        testRepository.save(test);
+        return "add successful!";
+    }
+
+    private TestDto convertToTestDto (Test test){
             TestDto testDto = new TestDto();
 
             testDto.setTestId(test.getTestId());

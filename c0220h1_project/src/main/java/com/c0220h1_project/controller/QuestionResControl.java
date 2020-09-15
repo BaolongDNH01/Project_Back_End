@@ -32,7 +32,7 @@ public class QuestionResControl {
         return new ResponseEntity<>(questionService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/create-question")
+    @PostMapping(value = "/add-question")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> createQuestion(@RequestBody QuestionDto questionDto, UriComponentsBuilder builder){
         questionService.save(questionDto);

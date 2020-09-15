@@ -73,9 +73,10 @@ public class UserRestController {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
-        if (Boolean.TRUE.equals(userService.save(userService.parseDto(userDto)))) {
+
+    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto){
+        if (userService.save(userService.parseDto(userDto))){
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.CONFLICT);

@@ -21,6 +21,7 @@ public interface UserService {
 
     User parseDto(UserDto userDto);
 
+    List<User> findAllMember();
     //    tinh
 
     User findById(Integer id);

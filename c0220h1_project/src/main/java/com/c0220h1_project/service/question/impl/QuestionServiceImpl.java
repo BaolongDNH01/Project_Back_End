@@ -6,6 +6,7 @@ import com.c0220h1_project.model.question.QuestionDto;
 import com.c0220h1_project.model.test.Test;
 import com.c0220h1_project.repository.QuestionRepository;
 import com.c0220h1_project.repository.SubjectRepository;
+import com.c0220h1_project.repository.TestRepository;
 import com.c0220h1_project.service.question.QuestionService;
 import com.c0220h1_project.service.subject.SubjectService;
 import com.c0220h1_project.service.test.TestService;
@@ -26,6 +27,8 @@ public class QuestionServiceImpl implements QuestionService {
     SubjectService subjectService;
     @Autowired
     TestService testService;
+    @Autowired
+    TestRepository testRepository;
 
     @Autowired
     SubjectRepository subjectRepository;
@@ -107,6 +110,26 @@ public class QuestionServiceImpl implements QuestionService {
             checkValidFile(arrDataTrim);
         }
         return null;
+    }
+
+    @Override
+    public List<QuestionDto> getQuestionsToAddToTest(Integer[] ids) {
+       List<Question> listQuestionInExam;
+       List<Question> listQuestionInSubject;
+       Test test = testRepository.findById(ids[0]).get();
+       listQuestionInExam = test.getQuestions();
+
+       Subject subject = subjectRepository.findById(ids[1]).get();
+        listQuestionInSubject = questionRepository.findQuestionsBySubject(subject);
+       if (listQuestionInSubject.size() > 0){
+           for (Question question : listQuestionInExam) {
+               listQuestionInSubject.remove(question);
+           }
+       }else {
+           System.out.println("Ko tim thay");
+       }
+
+        return listQuestionInSubject.stream().map(this::convertToQuestionDTO).collect(Collectors.toList());
     }
 
     private String checkValidFile(List<String> arrData) {

@@ -63,4 +63,9 @@ public class QuestionResControl {
         String[] arrData = content.split("\n");
         questionService.importFile(arrData);
     }
+
+    @GetMapping("getQuestionsToAddToTest/{ids}")
+    public ResponseEntity<List<QuestionDto>> getQuestionToAddToTest(@PathVariable Integer[] ids){
+            return new ResponseEntity<>(questionService.getQuestionsToAddToTest(ids),HttpStatus.OK);
+    }
 }

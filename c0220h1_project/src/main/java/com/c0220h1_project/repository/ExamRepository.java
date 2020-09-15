@@ -1,6 +1,7 @@
 package com.c0220h1_project.repository;
 
 import com.c0220h1_project.model.Exam;
+import com.c0220h1_project.model.test.Test;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,4 +13,7 @@ public interface ExamRepository extends JpaRepository<Exam,Integer> {
 
     //    tinh
     List<Exam> findByUserId(Integer id);
+
+    // khanh
+    List<Exam> findExamsByTest(Test test);
 }

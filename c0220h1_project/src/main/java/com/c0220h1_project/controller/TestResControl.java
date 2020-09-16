@@ -25,6 +25,11 @@ public class TestResControl {
     @Autowired
     private SubjectRepository subjectRepository;
 
+    @GetMapping("/getAllTestOfSubject/{subjectName}")
+    public ResponseEntity<List<TestDto>> getAllTestOfSubject(@PathVariable String subjectName) {
+        return new ResponseEntity<>(testService.findBySubject(subjectName), HttpStatus.OK);
+    }
+
     @GetMapping("/getAllTest")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<TestDto>> getAllTest() {

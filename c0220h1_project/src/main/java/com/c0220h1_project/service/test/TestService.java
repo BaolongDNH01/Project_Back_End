@@ -11,7 +11,7 @@ public interface TestService {
 
     TestDto findById(int testId);
 
-//  trả về Test lưu database
+    List<TestDto> findBySubject(String subject);
     Test findByIdReturnTest(int testId);
     void deleteById(Integer[] ids);
     String importFile(String[] data);

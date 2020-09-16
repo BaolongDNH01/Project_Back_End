@@ -37,7 +37,7 @@ public class Test {
 
 
     @JsonBackReference
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "test_question",
             joinColumns = @JoinColumn(name = "test_id"),
@@ -46,11 +46,11 @@ public class Test {
     List<Question> questions;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="_subject_id", nullable=false)
     private Subject subject;
 
-    @OneToMany(mappedBy = "test")
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Exam> examList;
 

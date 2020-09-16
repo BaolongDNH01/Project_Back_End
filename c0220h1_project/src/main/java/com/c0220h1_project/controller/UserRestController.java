@@ -30,7 +30,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-//@RequestMapping(path = "/users")
 public class UserRestController {
     @Autowired
     UserService userService;

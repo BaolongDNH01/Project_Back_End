@@ -6,6 +6,7 @@ import com.c0220h1_project.model.question.QuestionDto;
 import com.c0220h1_project.model.test.Test;
 import com.c0220h1_project.repository.QuestionRepository;
 import com.c0220h1_project.repository.SubjectRepository;
+import com.c0220h1_project.repository.TestRepository;
 import com.c0220h1_project.service.question.QuestionService;
 import com.c0220h1_project.service.subject.SubjectService;
 import com.c0220h1_project.service.test.TestService;
@@ -26,6 +27,8 @@ public class QuestionServiceImpl implements QuestionService {
     SubjectService subjectService;
     @Autowired
     TestService testService;
+    @Autowired
+    TestRepository testRepository;
 
     @Autowired
     SubjectRepository subjectRepository;
@@ -89,7 +92,38 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void delete(String questionId) {
-        questionRepository.deleteById(questionId);
+        List<Test> listDeleteQuestionInTest;
+        Question question = questionRepository.findById(questionId).orElse(null);
+        if (question != null){
+            listDeleteQuestionInTest = testRepository.findTestsByQuestionsContaining(question);
+            for (Test test : listDeleteQuestionInTest){
+                    List<Question> questionList = test.getQuestions();
+                    questionList.remove(question);
+            }
+        }
+            questionRepository.deleteById(questionId);
+    }
+
+
+
+    @Override
+    public List<QuestionDto> getQuestionsToAddToTest(Integer[] ids) {
+        List<Question> listQuestionInExam;
+        List<Question> listQuestionInSubject;
+        Test test = testRepository.findById(ids[0]).get();
+        listQuestionInExam = test.getQuestions();
+
+        Subject subject = subjectRepository.findById(ids[1]).get();
+        listQuestionInSubject = questionRepository.findQuestionsBySubject(subject);
+        if (listQuestionInSubject.size() > 0) {
+            for (Question question : listQuestionInExam) {
+                listQuestionInSubject.remove(question);
+            }
+        } else {
+            System.out.println("Ko tim thay");
+        }
+
+        return listQuestionInSubject.stream().map(this::convertToQuestionDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -111,76 +145,83 @@ public class QuestionServiceImpl implements QuestionService {
 
     private String checkValidFile(List<String> arrData) {
         Question questionCheck = new Question();
+        for (int i = 0; i < 80; ) {
+            String questionCode = arrData.get(i);
+            i++;
+            System.out.println(questionCode);
+            if (questionCode.length() > 5) {
+                return "thêm ko thành công, mã đề phải ít hơn 6 ký tự";
+            } else {
+                questionCheck.setQuestionId(questionCode);
+            }
 
-        String questionCode = arrData.get(0);
-        System.out.println(questionCode);
-        if (questionCode.length() > 5) {
-            return "thêm ko thành công, mã đề phải ít hơn 6 ký tự";
-        } else {
-            questionCheck.setQuestionId(questionCode);
+            String question = arrData.get(i);
+            System.out.println(question);
+            if (question.length() > 100) {
+                return "thêm ko thành công, câu hỏi quá dài";
+            } else {
+                questionCheck.setQuestion(question);
+            }
+            i++;
+
+            String answerA = arrData.get(i);
+            System.out.println(answerA);
+            if (question.length() > 100) {
+                return "thêm ko thành công, câu trả lời dài";
+            } else {
+                questionCheck.setAnswerA(answerA);
+            }
+            i++;
+
+            String answerB = arrData.get(i);
+            System.out.println(answerB);
+            if (question.length() > 100) {
+                return "thêm ko thành công, câu trả lời dài";
+            } else {
+                questionCheck.setAnswerB(answerB);
+            }
+            i++;
+
+            String answerC = arrData.get(i);
+            System.out.println(answerC);
+            if (question.length() > 100) {
+                return "thêm ko thành công, câu trả lời dài";
+            } else {
+                questionCheck.setAnswerC(answerC);
+            }
+            i++;
+
+
+            String answerD = arrData.get(i);
+            System.out.println(answerD);
+            if (question.length() > 100) {
+                return "thêm ko thành công, câu trả lời dài";
+            } else {
+                questionCheck.setAnswerD(answerD);
+            }
+            i++;
+
+            String rightAnswer = arrData.get(i);
+            System.out.println(rightAnswer);
+            if (question.length() > 100) {
+                return "thêm ko thành công, câu trả lời dài";
+            } else {
+                questionCheck.setRightAnswer(rightAnswer);
+            }
+            i++;
+
+
+            String testSubject = arrData.get(i);
+            Subject subject = null;
+            System.out.println(testSubject);
+            subject = subjectRepository.findSubjectBySubjectName(testSubject);
+            i++;
+
+            questionCheck.setSubject(subject);
+
+            System.out.println(subject);
+            questionRepository.save(questionCheck);
         }
-
-        String question = arrData.get(1);
-        System.out.println(question);
-        if (question.length() > 100) {
-            return "thêm ko thành công, câu hỏi quá dài";
-        } else {
-            questionCheck.setQuestion(question);
-        }
-
-        String answerA = arrData.get(2);
-        System.out.println(answerA);
-        if (question.length() > 100) {
-            return "thêm ko thành công, câu trả lời dài";
-        } else {
-            questionCheck.setAnswerA(answerA);
-        }
-
-        String answerB = arrData.get(3);
-        System.out.println(answerB);
-        if (question.length() > 100) {
-            return "thêm ko thành công, câu trả lời dài";
-        } else {
-            questionCheck.setAnswerB(answerB);
-        }
-
-        String answerC = arrData.get(4);
-        System.out.println(answerC);
-        if (question.length() > 100) {
-            return "thêm ko thành công, câu trả lời dài";
-        } else {
-            questionCheck.setAnswerC(answerC);
-        }
-
-
-        String answerD = arrData.get(5);
-        System.out.println(answerD);
-        if (question.length() > 100) {
-            return "thêm ko thành công, câu trả lời dài";
-        } else {
-            questionCheck.setAnswerD(answerD);
-        }
-
-        String rightAnswer = arrData.get(6);
-        System.out.println(rightAnswer);
-        if (question.length() > 100) {
-            return "thêm ko thành công, câu trả lời dài";
-        } else {
-            questionCheck.setRightAnswer(rightAnswer);
-        }
-
-
-
-        String testSubject = arrData.get(7);
-        Subject subject = null;
-        System.out.println(testSubject);
-        subject = subjectRepository.findSubjectBySubjectName(testSubject);
-
-        questionCheck.setSubject(subject);
-
-        System.out.println(subject);
-        questionRepository.save(questionCheck);
-
         return "save ok!";
     }
 }

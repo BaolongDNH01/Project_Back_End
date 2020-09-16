@@ -48,8 +48,16 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public void deleteById(Integer[] ids) {
+        List<Exam> examOfTest;
         for (int id : ids) {
-            testRepository.deleteById(id);
+            Test test = testRepository.findById(id).orElse(null);
+            if(test != null){
+                examOfTest = examRepository.findExamsByTest(test);
+                for (Exam e: examOfTest) {
+                    examRepository.delete(e);
+                }
+                testRepository.deleteById(id);
+            }
         }
     }
 
@@ -77,11 +85,11 @@ public class TestServiceImpl implements TestService {
 //        check và thêm tên đề thi
         String testName = arrData.get(0);
         if(testRepository.existsTestByTestName(testName)){
-            return "import unsuccessful, name existed!";
-        } else if (testName.length() > 51) {
-            return "import unsuccessful, name too long!";
-        } else if (testName.length() < 4) {
-            return "import unsuccessful, name too long!";
+            return "import unsuccessful, name test existed!";
+        } else if (testName.length() > 50) {
+            return "import unsuccessful, name test must be less than 51 !";
+        } else if (testName.length() < 3) {
+            return "import unsuccessful, name test must be more than 2 !";
         }else {
             test.setTestName(testName);
         }
@@ -114,7 +122,7 @@ public class TestServiceImpl implements TestService {
         }
 
 //        thêm câu hỏi
-        Set<Question> questionSet = new HashSet<>();
+        List<Question> questionSet = new ArrayList<>();
         int totalQuestion = 0;
         for (int i = 4; i < arrData.size(); i += 6) {
             if(questionRepository.findQuestionByQuestionName(arrData.get(i)) == null){
@@ -142,9 +150,13 @@ public class TestServiceImpl implements TestService {
         List<Question> questions = questionRepository.findQuestionsBySubject(subject);
         if (totalQuestion - 10 < 0) {
             if (questions.size() > 10 - totalQuestion) {
-                for (int i = 0; i < 10 - totalQuestion; i++) {
+                int i = 0;
+                while (i < 10 - totalQuestion) {
                     Question question = questions.get((int) Math.floor(Math.random() * questions.size()));
-                    questionSet.add(question);
+                    if(!questionSet.contains(question)){
+                        questionSet.add(question);
+                        i++;
+                    }
                 }
             }else {
                 questionSet.addAll(questions);
@@ -193,14 +205,18 @@ public class TestServiceImpl implements TestService {
             return "add successful!";
         }
 
-        private Set<Question> getRandomQuestion (Test test1){
+        private List<Question> getRandomQuestion (Test test1){
             List<Question> questions = new ArrayList<>();
-            Set<Question> questionSet = new HashSet<>();
+            List<Question> questionSet = new ArrayList<>();
             questions = questionRepository.findQuestionsBySubject(test1.getSubject());
-            if (questions.size() >= 10) {
-                for (int i = 0; i < 10; i++) {
+            if (questions.size() > 10) {
+                int i = 0;
+                while (i < 10) {
                     Question question = questions.get((int) Math.floor(Math.random() * questions.size()));
-                    questionSet.add(question);
+                    if(!questionSet.contains(question)){
+                        questionSet.add(question);
+                        i++;
+                    }
                 }
             } else {
                 questionSet.addAll(questions);
@@ -208,7 +224,53 @@ public class TestServiceImpl implements TestService {
             return questionSet;
         }
 
-        private TestDto convertToTestDto (Test test){
+    @Override
+    public String removeQuestionInTest(String[] listQuesId) {
+        Test test;
+        if (testRepository.findById(Integer.valueOf(listQuesId[listQuesId.length - 1])).orElse(null) != null) {
+            test = testRepository.findById(Integer.valueOf(listQuesId[listQuesId.length - 1])).orElse(new Test());
+        } else {
+            return "can not add question, test is not exist!";
+        }
+
+        List<Question> questionList = new ArrayList<>();
+        questionList = test.getQuestions();
+        for (int i = 0; i < listQuesId.length - 1; i++) {
+            for (int j = 0; j < questionList.size(); j++) {
+                if (listQuesId[i].equals(questionList.get(j).getQuestionId())) {
+                    questionList.remove(questionList.get(j));
+                }
+            }
+        }
+
+        test.setQuestions(questionList);
+        testRepository.save(test);
+        return "remove successful!";
+    }
+
+    @Override
+    public String addQuestionInTest(String[] listQuesId) {
+        Test test;
+        if (testRepository.findById(Integer.valueOf(listQuesId[listQuesId.length - 1])).orElse(null) != null) {
+            test = testRepository.findById(Integer.valueOf(listQuesId[listQuesId.length - 1])).orElse(new Test());
+        } else {
+            return "can not add question, test is not exist!";
+        }
+
+        List<Question> questionList = new ArrayList<>();
+        questionList = test.getQuestions();
+        for (int i = 0; i < listQuesId.length - 1; i++) {
+            if(questionRepository.findById(listQuesId[i]).orElse(null) != null) {
+                questionList.add(questionRepository.findById(listQuesId[i]).get());
+            }
+        }
+
+        test.setQuestions(questionList);
+        testRepository.save(test);
+        return "add successful!";
+    }
+
+    private TestDto convertToTestDto (Test test){
             TestDto testDto = new TestDto();
 
             testDto.setTestId(test.getTestId());
@@ -231,8 +293,8 @@ public class TestServiceImpl implements TestService {
             }
             testDto.setExamList(listExamId);
 
-            Set<Question> listQuestion = new HashSet<>();
-            Set<String> listQuestionId = new HashSet<>();
+            List<Question> listQuestion = new ArrayList<>();
+            List<String> listQuestionId = new ArrayList<>();
             listQuestion = test.getQuestions();
             for (Question question : listQuestion) {
                 listQuestionId.add(question.getQuestionId());

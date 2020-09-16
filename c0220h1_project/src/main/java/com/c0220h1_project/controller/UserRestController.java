@@ -68,7 +68,11 @@ public class UserRestController {
         }
         return new ResponseEntity<>(memberList, HttpStatus.OK);
     }
+<<<<<<< Updated upstream
     
+=======
+
+>>>>>>> Stashed changes
 
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> registerUser(@RequestBody UserDto userDto){

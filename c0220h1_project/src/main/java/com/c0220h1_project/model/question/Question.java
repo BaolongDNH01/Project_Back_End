@@ -40,7 +40,7 @@ public class Question{
     private String rightAnswer;
 
     @JsonManagedReference
-    @ManyToMany
+    @ManyToMany(mappedBy = "questions")
     private
     Set<Test> tests;
 

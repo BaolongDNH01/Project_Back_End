@@ -12,7 +12,7 @@ public class TestDto {
 
     private String grade;
 
-    private Set<String> questions;
+    private List<String> questions;
 
     private Integer subjectId;
 
@@ -32,11 +32,11 @@ public class TestDto {
         return testId;
     }
 
-    public Set<String> getQuestions() {
+    public List<String> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(Set<String> questions) {
+    public void setQuestions(List<String> questions) {
         this.questions = questions;
     }
 

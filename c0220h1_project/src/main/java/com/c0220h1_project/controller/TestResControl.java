@@ -7,6 +7,7 @@ import com.c0220h1_project.service.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,18 +26,21 @@ public class TestResControl {
     private SubjectRepository subjectRepository;
 
     @GetMapping("/getAllTest")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<TestDto>> getAllTest() {
         return new ResponseEntity<>(testService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/getTestById/{id}")
-    public ResponseEntity<TestDto> getTestById(@PathVariable Integer id){
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<TestDto> getTestById(@PathVariable Integer id) {
         TestDto test = testService.findById(id);
         return new ResponseEntity<>(test, HttpStatus.OK);
     }
 
     @PostMapping("/addTest")
-    public ResponseEntity<ResponseMessage> addTest(@RequestBody TestDto test){
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ResponseMessage> addTest(@RequestBody TestDto test) {
         ResponseMessage responseMessage = new ResponseMessage();
         responseMessage.setMessage(testService.save(test));
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
@@ -44,11 +48,12 @@ public class TestResControl {
 
 
     @PostMapping("/importTest")
-    public ResponseEntity<ResponseMessage> upload(@RequestParam("file") MultipartFile file){
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ResponseMessage> upload(@RequestParam("file") MultipartFile file) {
         String content = "";
         try {
             content = new String(file.getBytes(), StandardCharsets.UTF_8);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -60,7 +65,27 @@ public class TestResControl {
 
 
     @PostMapping("/deleteTest")
-    public void deleteFile(@RequestBody Integer[] ids){
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteFile(@RequestBody Integer[] ids) {
         testService.deleteById(ids);
     }
+
+    @PostMapping("/removeQuestionInTest")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ResponseMessage> removeQuestionInTest(@RequestBody String[] questionIdsAndIdTest) {
+        ResponseMessage responseMessage = new ResponseMessage();
+        responseMessage.setMessage(testService.removeQuestionInTest(questionIdsAndIdTest));
+        System.out.println(responseMessage.getMessage());
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    }
+
+    @PostMapping("/addQuestionInTest")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ResponseMessage> addQuestionInTest(@RequestBody String[] questionIdsAndIdTest) {
+        ResponseMessage responseMessage = new ResponseMessage();
+        responseMessage.setMessage(testService.addQuestionInTest(questionIdsAndIdTest));
+        System.out.println(responseMessage.getMessage());
+        return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+    }
+
 }

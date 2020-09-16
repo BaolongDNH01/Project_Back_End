@@ -23,16 +23,18 @@ public class QuestionResControl {
     @Autowired
     QuestionService questionService;
     @GetMapping(value = "/question")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<QuestionDto>> getListQuestion(){
         return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/question/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<QuestionDto> getQuestion(@PathVariable String id){
         return new ResponseEntity<>(questionService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/create-question")
+    @PostMapping(value = "/add-question")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> createQuestion(@RequestBody QuestionDto questionDto, UriComponentsBuilder builder){
         questionService.save(questionDto);
@@ -51,6 +53,7 @@ public class QuestionResControl {
     }
 
     @DeleteMapping(value = "/delete-question/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteQuestion(@PathVariable String id){
         questionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -58,9 +61,16 @@ public class QuestionResControl {
 
 
     @PostMapping("importQuestion")
+    @PreAuthorize("hasRole('ADMIN')")
     public void upload(@RequestParam("file") MultipartFile file) throws IOException {
         String content = new String(file.getBytes(), StandardCharsets.UTF_8);
         String[] arrData = content.split("\n");
         questionService.importFile(arrData);
+    }
+
+    @GetMapping("getQuestionsToAddToTest/{ids}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<QuestionDto>> getQuestionToAddToTest(@PathVariable Integer[] ids){
+            return new ResponseEntity<>(questionService.getQuestionsToAddToTest(ids),HttpStatus.OK);
     }
 }

@@ -12,4 +12,6 @@ public interface QuestionService {
     void save(QuestionDto questionDto);
     void delete(String questionId);
     String importFile(String[] data);
+
+    List<QuestionDto> getQuestionsToAddToTest(Integer[] ids);
 }

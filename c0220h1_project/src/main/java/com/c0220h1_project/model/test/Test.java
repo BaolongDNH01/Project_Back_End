@@ -38,8 +38,12 @@ public class Test {
 
     @JsonBackReference
     @ManyToMany
+    @JoinTable(
+            name = "test_question",
+            joinColumns = @JoinColumn(name = "test_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id"))
     private
-    Set<Question> questions;
+    List<Question> questions;
 
     @JsonBackReference
     @ManyToOne
@@ -53,7 +57,7 @@ public class Test {
     public Test() {
     }
 
-    public Test(@NotEmpty @Size(min = 1, max = 50) String testCode, @NotEmpty @Size(min = 1, max = 50) String testName, @NotEmpty @Size(min = 1, max = 50) String grade, Set<Question> questions, Subject subject) {
+    public Test(@NotEmpty @Size(min = 1, max = 50) String testCode, @NotEmpty @Size(min = 1, max = 50) String testName, @NotEmpty @Size(min = 1, max = 50) String grade, List<Question> questions, Subject subject) {
         this.testCode = testCode;
         this.testName = testName;
         this.grade = grade;
@@ -73,11 +77,11 @@ public class Test {
         return testCode;
     }
 
-    public Set<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(Set<Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 

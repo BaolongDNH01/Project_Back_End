@@ -6,7 +6,7 @@ public class ExamDto {
     private Double mark;
     private String answer;
     private Integer times;
-    private int user;
+    private String user;
     private int test;
 
     public Integer getExamId() {
@@ -49,11 +49,11 @@ public class ExamDto {
         this.times = times;
     }
 
-    public int getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(int user) {
+    public void setUser(String user) {
         this.user = user;
     }
 

@@ -37,7 +37,7 @@ public class TestResControl {
     }
 
     @GetMapping("/getTestById/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MEMBER') or hasRole('ADMIN')" )
     public ResponseEntity<TestDto> getTestById(@PathVariable Integer id) {
         TestDto test = testService.findById(id);
         return new ResponseEntity<>(test, HttpStatus.OK);

@@ -36,7 +36,7 @@ public class ExamServiceImpl implements ExamService {
         exam.setMark(examDto.getMark());
         exam.setExamDate(examDto.getExamDate());
         exam.setAnswer(examDto.getAnswer());
-        exam.setUser(userService.findById(examDto.getUser()));
+        exam.setUser(userService.findUserName(examDto.getUser()));
         exam.setTest(testService.findByIdReturnTest(examDto.getTest()));
         examRepository.save(exam);
     }

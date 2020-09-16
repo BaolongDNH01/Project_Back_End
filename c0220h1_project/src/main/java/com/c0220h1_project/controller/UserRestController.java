@@ -121,11 +121,11 @@ public class UserRestController {
 
 
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> findUserById(@PathVariable("id") Integer id) {
-        User user = userService.findById(id);
+    @GetMapping(value = "getUserByUsername/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> findUserById(@PathVariable("username") String username) {
+        User user = userService.findUserName(username);
         if (user == null) {
-            return new ResponseEntity<>(new ApiResponse(false, NOT_FOUND_USER), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -139,18 +139,19 @@ public class UserRestController {
 
 
     @PatchMapping(value = "update-user/{id}")
-    public ResponseEntity<Object> updateUser(@PathVariable Integer id, @RequestBody User user) {
+    public ResponseEntity<String> updateUser(@PathVariable Integer id, @RequestBody UserDto user) {
+        User newInfo = userService.parseDto(user);
         User currentUser = userService.findById(id);
         if (currentUser == null) {
-            return new ResponseEntity<>(new ApiResponse(false, NOT_FOUND_USER), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        currentUser.setUsername(user.getUsername());
-        currentUser.setFullName(user.getFullName());
-        currentUser.setEmail(user.getEmail());
-        currentUser.setAddress(user.getAddress());
-        currentUser.setPhoneNumber(user.getPhoneNumber());
+        currentUser.setFullName(newInfo.getFullName());
+        currentUser.setEmail(newInfo.getEmail());
+        currentUser.setAddress(newInfo.getAddress());
+        currentUser.setPhoneNumber(newInfo.getPhoneNumber());
+        currentUser.setAvatar(newInfo.getAvatar());
         userService.edit(currentUser);
-        return new ResponseEntity<>(currentUser, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

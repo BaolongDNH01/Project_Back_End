@@ -12,7 +12,7 @@ public interface ExamRepository extends JpaRepository<Exam,Integer> {
     List<Object> findUserPointDesc();
 
     //    tinh
-    List<Exam> findByUserId(Integer id);
+    List<Exam> findByUserUsername(String username);
 
     // khanh
     List<Exam> findExamsByTest(Test test);

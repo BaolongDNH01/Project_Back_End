@@ -52,8 +52,8 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public List<Exam> findByUserId(Integer id) {
-        return examRepository.findByUserId(id);
+    public List<Exam> findByUserUsername(String username) {
+        return examRepository.findByUserUsername(username);
     }
 
 

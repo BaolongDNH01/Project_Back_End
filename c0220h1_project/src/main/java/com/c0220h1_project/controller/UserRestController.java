@@ -170,9 +170,9 @@ public class UserRestController {
 
 //    tinh - test history
 
-    @GetMapping(value = "/history/{id}")
-    public ResponseEntity<Object> getTestHistory(@PathVariable("id") Integer id) {
-        List<Exam> exams = examService.findByUserId(id);
+    @GetMapping(value = "/history/{username}")
+    public ResponseEntity<Object> getTestHistory(@PathVariable("username") String username) {
+        List<Exam> exams = examService.findByUserUsername(username);
         if (exams == null) {
             return new ResponseEntity<>(new ApiResponse(false, NOT_FOUND_EXAMS), HttpStatus.NOT_FOUND);
         }

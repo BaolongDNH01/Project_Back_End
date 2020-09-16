@@ -30,7 +30,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-//@RequestMapping(path = "/users")
 public class UserRestController {
     @Autowired
     UserService userService;
@@ -68,11 +67,7 @@ public class UserRestController {
         }
         return new ResponseEntity<>(memberList, HttpStatus.OK);
     }
-<<<<<<< Updated upstream
-    
-=======
 
->>>>>>> Stashed changes
 
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> registerUser(@RequestBody UserDto userDto){

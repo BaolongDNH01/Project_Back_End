@@ -68,7 +68,6 @@ public class UserRestController {
         return new ResponseEntity<>(memberList, HttpStatus.OK);
     }
 
-
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes =MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> registerUser(@RequestBody UserDto userDto){
         if (Boolean.TRUE.equals(userService.save(userService.parseDto(userDto)))){

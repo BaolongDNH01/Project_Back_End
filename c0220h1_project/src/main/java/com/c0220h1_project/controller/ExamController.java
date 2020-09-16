@@ -21,7 +21,7 @@ public class ExamController {
         examService.save(examDto);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/get-exam/{id}").buildAndExpand(examDto.getExamId()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 

@@ -36,11 +36,11 @@ public class QuestionResControl {
 
     @PostMapping(value = "/add-question")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> createQuestion(@RequestBody QuestionDto questionDto, UriComponentsBuilder builder){
+    public ResponseEntity<QuestionDto> createQuestion(@RequestBody QuestionDto questionDto, UriComponentsBuilder builder){
         questionService.save(questionDto);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/question/{id}").buildAndExpand(questionDto.getQuestionId()).toUri());
-        return new ResponseEntity<>("Create", HttpStatus.CREATED);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/update-question/{id}")

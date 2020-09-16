@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -17,6 +18,7 @@ public class ExamController {
     ExamService examService;
 
     @PostMapping("/create-exam")
+    @PreAuthorize("hasRole('MEMBER') or hasRole('ADMIN')" )
     public ResponseEntity<Exam> createExam(@RequestBody ExamDto examDto, UriComponentsBuilder builder) {
         examService.save(examDto);
         HttpHeaders headers = new HttpHeaders();
@@ -26,6 +28,7 @@ public class ExamController {
 
 
     @GetMapping("/get-exam/{id}")
+    @PreAuthorize("hasRole('MEMBER') or hasRole('ADMIN')" )
     public ResponseEntity<Exam> getExam(@PathVariable Integer id) {
         Exam exam = examService.findById(id);
         return new ResponseEntity<>(exam, HttpStatus.OK);

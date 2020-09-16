@@ -13,11 +13,8 @@ import com.c0220h1_project.service.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +36,11 @@ public class TestServiceImpl implements TestService {
     @Override
     public TestDto findById(int testId) {
         return testRepository.findById(testId).map(this::convertToTestDto).orElse(null);
+    }
+
+    @Override
+    public List<TestDto> findBySubject(String subject) {
+        return testRepository.findBySubject_SubjectName(subject).stream().map(this::convertToTestDto).collect(Collectors.toList());
     }
 
     @Override

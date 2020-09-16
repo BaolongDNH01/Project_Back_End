@@ -89,7 +89,7 @@ public class UserRestController {
         return new ResponseEntity<>(userService.findTopByOrderByIdDesc(), HttpStatus.OK);
     }
 
-    /////////// THIEN ///////////
+
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody Login loginRequest) throws AuthenticationException {
 
@@ -118,7 +118,7 @@ public class UserRestController {
         return ResponseEntity.ok(response);
     }
 
-    //    tinh - get user by id
+
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> findUserById(@PathVariable("id") Integer id) {
@@ -135,7 +135,7 @@ public class UserRestController {
         return new ResponseEntity<>(userList.size(), HttpStatus.OK);
     }
 
-//    tinh - update user
+
 
     @PatchMapping(value = "update-user/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable Integer id, @RequestBody User user) {
@@ -152,7 +152,7 @@ public class UserRestController {
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 
-//    tinh - update password
+
 
     @PatchMapping("/update-password/{id}")
     public ResponseEntity<Object> changePassword(@PathVariable Integer id, @RequestBody UpdatePasswordToken updatePasswordToken) {
@@ -168,7 +168,7 @@ public class UserRestController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-//    tinh - test history
+
 
     @GetMapping(value = "/history/{id}")
     public ResponseEntity<Object> getTestHistory(@PathVariable("id") Integer id) {

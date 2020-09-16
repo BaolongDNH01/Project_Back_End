@@ -71,7 +71,7 @@ public class User  {
         this.examList = examList;
     }
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Exam> examList;
 

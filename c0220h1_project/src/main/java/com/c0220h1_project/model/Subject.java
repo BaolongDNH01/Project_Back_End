@@ -25,11 +25,11 @@ public class Subject {
     String subjectName;
 
     @JsonManagedReference
-    @OneToMany(mappedBy="subject", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="subject", cascade = CascadeType.DETACH)
     private Set<Test> tests;
 
     @JsonBackReference
-    @OneToMany(mappedBy="subject", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="subject", cascade = CascadeType.DETACH)
     private Set<Question> questions;
 
     public Subject() {

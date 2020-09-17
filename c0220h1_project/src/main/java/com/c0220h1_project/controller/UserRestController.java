@@ -159,10 +159,10 @@ public class UserRestController {
     public ResponseEntity<Object> changePassword(@PathVariable Integer id, @RequestBody UpdatePasswordToken updatePasswordToken) {
         User user = userService.findById(id);
         if (user == null) {
-            return new ResponseEntity<>(new ApiResponse(false, NOT_FOUND_USER), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         if (!encoder.matches(updatePasswordToken.getCurrentPassword(), user.getUserPassword())) {
-            return new ResponseEntity<>(new ApiResponse(false, "The password is incorrect!"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         user.setUsername(encoder.encode(updatePasswordToken.getNewPassword()));
         userService.edit(user);

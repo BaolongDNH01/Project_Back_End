@@ -29,7 +29,7 @@ public class QuestionResControl {
     }
 
     @GetMapping(value = "/question/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MEMBER') or hasRole('ADMIN')" )
     public ResponseEntity<QuestionDto> getQuestion(@PathVariable String id){
         return new ResponseEntity<>(questionService.findById(id), HttpStatus.OK);
     }

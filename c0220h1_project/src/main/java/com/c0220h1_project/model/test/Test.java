@@ -46,11 +46,11 @@ public class Test {
     List<Question> questions;
 
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name="_subject_id", nullable=false)
     private Subject subject;
 
-    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "test", cascade = CascadeType.DETACH)
     @JsonManagedReference
     private List<Exam> examList;
 

@@ -40,12 +40,12 @@ public class Question{
     private String rightAnswer;
 
     @JsonManagedReference
-    @ManyToMany(mappedBy = "questions", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.DETACH)
     private
     Set<Test> tests;
 
     @JsonManagedReference
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 

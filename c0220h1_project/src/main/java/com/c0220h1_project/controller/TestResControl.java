@@ -7,6 +7,7 @@ import com.c0220h1_project.service.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,18 +25,26 @@ public class TestResControl {
     @Autowired
     private SubjectRepository subjectRepository;
 
+    @GetMapping("/getAllTestOfSubject/{subjectName}")
+    public ResponseEntity<List<TestDto>> getAllTestOfSubject(@PathVariable String subjectName) {
+        return new ResponseEntity<>(testService.findBySubject(subjectName), HttpStatus.OK);
+    }
+
     @GetMapping("/getAllTest")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<TestDto>> getAllTest() {
         return new ResponseEntity<>(testService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/getTestById/{id}")
+    @PreAuthorize("hasRole('MEMBER') or hasRole('ADMIN')" )
     public ResponseEntity<TestDto> getTestById(@PathVariable Integer id) {
         TestDto test = testService.findById(id);
         return new ResponseEntity<>(test, HttpStatus.OK);
     }
 
     @PostMapping("/addTest")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResponseMessage> addTest(@RequestBody TestDto test) {
         ResponseMessage responseMessage = new ResponseMessage();
         responseMessage.setMessage(testService.save(test));
@@ -44,6 +53,7 @@ public class TestResControl {
 
 
     @PostMapping("/importTest")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResponseMessage> upload(@RequestParam("file") MultipartFile file) {
         String content = "";
         try {
@@ -60,11 +70,13 @@ public class TestResControl {
 
 
     @PostMapping("/deleteTest")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteFile(@RequestBody Integer[] ids) {
         testService.deleteById(ids);
     }
 
     @PostMapping("/removeQuestionInTest")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResponseMessage> removeQuestionInTest(@RequestBody String[] questionIdsAndIdTest) {
         ResponseMessage responseMessage = new ResponseMessage();
         responseMessage.setMessage(testService.removeQuestionInTest(questionIdsAndIdTest));
@@ -73,6 +85,7 @@ public class TestResControl {
     }
 
     @PostMapping("/addQuestionInTest")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResponseMessage> addQuestionInTest(@RequestBody String[] questionIdsAndIdTest) {
         ResponseMessage responseMessage = new ResponseMessage();
         responseMessage.setMessage(testService.addQuestionInTest(questionIdsAndIdTest));

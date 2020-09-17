@@ -13,5 +13,5 @@ public interface ExamService {
     List<Object> findUserPointDesc();
 
     //    tinh
-    List<Exam> findByUserId(Integer id);
+    List<Exam> findByUserUsername(String username);
 }

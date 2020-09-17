@@ -3,6 +3,7 @@ package com.c0220h1_project.service.user;
 import com.c0220h1_project.model.user.User;
 import com.c0220h1_project.model.user.UserDto;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserService {
@@ -26,6 +27,7 @@ public interface UserService {
 
     User findById(Integer id);
 
+    User findUserName(String username);
 }
 
 

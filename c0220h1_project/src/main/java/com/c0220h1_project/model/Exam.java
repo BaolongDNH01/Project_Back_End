@@ -19,15 +19,13 @@ public class Exam {
     @NotEmpty
     private String answer;
     private Integer times;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user_id")
-//    @JsonBackReference
     @JsonIdentityReference(alwaysAsId = true)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "test_id")
-//    @JsonBackReference
     @JsonIdentityReference(alwaysAsId = true)
     private Test test;
 

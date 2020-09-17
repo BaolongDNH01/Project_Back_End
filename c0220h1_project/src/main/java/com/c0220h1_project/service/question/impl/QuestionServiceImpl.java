@@ -135,7 +135,7 @@ public class QuestionServiceImpl implements QuestionService {
                 arrDataTrim.add(dataTrim);
             }
         }
-        if (arrDataTrim.size() > 100) {
+        if (arrDataTrim.size() > 300) {
             return "file quá dài so với yêu cầu";
         } else {
             checkValidFile(arrDataTrim);
@@ -145,7 +145,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     private String checkValidFile(List<String> arrData) {
         Question questionCheck = new Question();
-        for (int i = 0; i < 80; ) {
+        for (int i = 0; i < 160; ) {
             String questionCode = arrData.get(i);
             i++;
             System.out.println(questionCode);
@@ -157,7 +157,7 @@ public class QuestionServiceImpl implements QuestionService {
 
             String question = arrData.get(i);
             System.out.println(question);
-            if (question.length() > 100) {
+            if (question.length() > 300) {
                 return "thêm ko thành công, câu hỏi quá dài";
             } else {
                 questionCheck.setQuestion(question);
@@ -166,7 +166,7 @@ public class QuestionServiceImpl implements QuestionService {
 
             String answerA = arrData.get(i);
             System.out.println(answerA);
-            if (question.length() > 100) {
+            if (question.length() > 300) {
                 return "thêm ko thành công, câu trả lời dài";
             } else {
                 questionCheck.setAnswerA(answerA);
@@ -175,7 +175,7 @@ public class QuestionServiceImpl implements QuestionService {
 
             String answerB = arrData.get(i);
             System.out.println(answerB);
-            if (question.length() > 100) {
+            if (question.length() > 300) {
                 return "thêm ko thành công, câu trả lời dài";
             } else {
                 questionCheck.setAnswerB(answerB);
@@ -184,7 +184,7 @@ public class QuestionServiceImpl implements QuestionService {
 
             String answerC = arrData.get(i);
             System.out.println(answerC);
-            if (question.length() > 100) {
+            if (question.length() > 300) {
                 return "thêm ko thành công, câu trả lời dài";
             } else {
                 questionCheck.setAnswerC(answerC);
@@ -194,7 +194,7 @@ public class QuestionServiceImpl implements QuestionService {
 
             String answerD = arrData.get(i);
             System.out.println(answerD);
-            if (question.length() > 100) {
+            if (question.length() > 300) {
                 return "thêm ko thành công, câu trả lời dài";
             } else {
                 questionCheck.setAnswerD(answerD);
@@ -203,7 +203,7 @@ public class QuestionServiceImpl implements QuestionService {
 
             String rightAnswer = arrData.get(i);
             System.out.println(rightAnswer);
-            if (question.length() > 100) {
+            if (question.length() > 300) {
                 return "thêm ko thành công, câu trả lời dài";
             } else {
                 questionCheck.setRightAnswer(rightAnswer);

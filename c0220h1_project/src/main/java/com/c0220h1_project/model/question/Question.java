@@ -40,7 +40,7 @@ public class Question{
     private String rightAnswer;
 
     @JsonManagedReference
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.DETACH)
     private
     Set<Test> tests;
 

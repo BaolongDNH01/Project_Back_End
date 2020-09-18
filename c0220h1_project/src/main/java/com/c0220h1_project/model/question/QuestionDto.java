@@ -13,6 +13,15 @@ public class QuestionDto {
 
     private Set<Integer> testId;
     private int subjectId;
+    private String subjectName;
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
 
     public String getQuestionId() {
         return questionId;

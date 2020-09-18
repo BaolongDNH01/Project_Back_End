@@ -51,6 +51,7 @@ public class QuestionServiceImpl implements QuestionService {
         questionDto.setTestId(id);
         Subject subject = question.getSubject();
         questionDto.setSubjectId(subject.getSubjectId());
+        questionDto.setSubjectName(subject.getSubjectName());
 
         return questionDto;
     }
@@ -142,6 +143,8 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return null;
     }
+
+
 
     private String checkValidFile(List<String> arrData) {
         Question questionCheck = new Question();

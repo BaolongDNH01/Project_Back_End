@@ -47,8 +47,13 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public List<Object> findUserPointDesc() {
-        return examRepository.findUserPointDesc();
+    public List<Object> findUserTopPositive() {
+        return examRepository.findUserTopPositive();
+    }
+
+    @Override
+    public List<Object> findUserTopExam(Integer subjectId) {
+        return examRepository.findUserTopExam(subjectId);
     }
 
     @Override

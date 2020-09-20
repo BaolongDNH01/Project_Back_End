@@ -121,6 +121,7 @@ public class UserRestController {
 
 
     @GetMapping(value = "getUserByUsername/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')"+"|| hasRole('MEMBER')")
     public ResponseEntity<Object> findUserById(@PathVariable("username") String username) {
         User user = userService.findUserName(username);
         if (user == null) {
@@ -138,17 +139,17 @@ public class UserRestController {
 
 
     @PatchMapping(value = "update-user/{id}")
+    @PreAuthorize("hasRole('ADMIN')"+"|| hasRole('MEMBER')")
     public ResponseEntity<String> updateUser(@PathVariable Integer id, @RequestBody UserDto user) {
-        User newInfo = userService.parseDto(user);
         User currentUser = userService.findById(id);
         if (currentUser == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        currentUser.setFullName(newInfo.getFullName());
-        currentUser.setEmail(newInfo.getEmail());
-        currentUser.setAddress(newInfo.getAddress());
-        currentUser.setPhoneNumber(newInfo.getPhoneNumber());
-        currentUser.setAvatar(newInfo.getAvatar());
+        currentUser.setFullName(user.getFullName());
+        currentUser.setEmail(user.getEmail());
+        currentUser.setAddress(user.getAddress());
+        currentUser.setPhoneNumber(user.getPhoneNumber());
+        currentUser.setAvatar(user.getAvatar());
         userService.edit(currentUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -156,6 +157,7 @@ public class UserRestController {
 
 
     @PatchMapping("/update-password/{id}")
+    @PreAuthorize("hasRole('MEMBER')")
     public ResponseEntity<Object> changePassword(@PathVariable Integer id, @RequestBody UpdatePasswordToken updatePasswordToken) {
         User user = userService.findById(id);
         if (user == null) {
@@ -178,6 +180,22 @@ public class UserRestController {
             return new ResponseEntity<>(new ApiResponse(false, NOT_FOUND_EXAMS), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(exams, HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/edit-user")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> patchUserInformation(@RequestBody UserDto userDto){
+        User user = userService.findById(userDto.getId());
+        if ((user == null) || ((userService.findByUsername(userDto.getUsername()) != null) && (userDto.getUsername().equals(user.getUsername())))){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        user.setUsername(userDto.getUsername());
+        user.setFullName(userDto.getFullName());
+        user.setAddress(userDto.getAddress());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setEmail(userDto.getEmail());
+        userService.edit(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

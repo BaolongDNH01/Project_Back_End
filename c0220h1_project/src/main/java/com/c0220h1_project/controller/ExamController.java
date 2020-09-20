@@ -34,8 +34,12 @@ public class ExamController {
         return new ResponseEntity<>(exam, HttpStatus.OK);
     }
 
-    @GetMapping("/get-user-point")
-    public ResponseEntity<Object> getUserPointDesc() {
-        return new ResponseEntity<>(examService.findUserPointDesc(), HttpStatus.OK);
+    @GetMapping("/get-user-top-positive")
+    public ResponseEntity<Object> getUserTopPositive() {
+        return new ResponseEntity<>(examService.findUserTopPositive(), HttpStatus.OK);
+    }
+    @GetMapping("top-user-exam-subject/{subjectId}")
+    public ResponseEntity<Object> get(@PathVariable Integer subjectId){
+        return new ResponseEntity<>(examService.findUserTopExam(subjectId), HttpStatus.OK);
     }
 }

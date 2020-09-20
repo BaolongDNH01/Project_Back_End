@@ -10,7 +10,8 @@ public interface ExamService {
     Exam findById(Integer examId);
     void save(ExamDto examDto);
     void delete(Integer examId);
-    List<Object> findUserPointDesc();
+    List<Object> findUserTopPositive();
+    List<Object> findUserTopExam(Integer subjectId);
 
     //    tinh
     List<Exam> findByUserUsername(String username);

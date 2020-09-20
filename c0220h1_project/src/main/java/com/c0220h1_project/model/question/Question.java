@@ -27,12 +27,10 @@ public class Question{
     @Size(min = 1, max = 255)
     private String answerB;
 
-    @NotEmpty
-    @Size(min = 1, max = 255)
+    @Size(min = 0, max = 255)
     private String answerC;
 
-    @NotEmpty
-    @Size(min = 1, max = 255)
+    @Size(min = 0, max = 255)
     private String answerD;
 
     @NotEmpty

@@ -11,7 +11,7 @@ public interface ExamRepository extends JpaRepository<Exam,Integer> {
     @Query("select u.user.username, count(u.user) as positive from Exam u group by u.user order by positive desc")
     List<Object> findUserTopPositive();
 
-    @Query("select  u.user.username, sum(u.mark) as point from Exam u where u.test.subject.subjectId = :subjectId group by u.user order by point desc")
+    @Query("select  u.user.username, avg(u.mark) as point from Exam u where u.test.subject.subjectId = :subjectId group by u.user having count(u.user) >= 10 order by point desc")
     List<Object> findUserTopExam(Integer subjectId);
 
     //    tinh

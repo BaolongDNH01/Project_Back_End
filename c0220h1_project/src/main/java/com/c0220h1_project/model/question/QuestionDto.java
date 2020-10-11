@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class QuestionDto {
     private String questionId;
-    private String question;
+    private String questionName;
     private String answerA;
     private String answerB;
     private String answerC;
@@ -31,12 +31,12 @@ public class QuestionDto {
         this.questionId = questionId;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getQuestionName() {
+        return questionName;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setQuestionName(String questionName) {
+        this.questionName = questionName;
     }
 
     public String getAnswerA() {

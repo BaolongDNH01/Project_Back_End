@@ -38,7 +38,7 @@ public class Question{
     private String rightAnswer;
 
     @JsonManagedReference
-    @ManyToMany(cascade = CascadeType.DETACH)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "questions",cascade = CascadeType.DETACH)
     private
     Set<Test> tests;
 

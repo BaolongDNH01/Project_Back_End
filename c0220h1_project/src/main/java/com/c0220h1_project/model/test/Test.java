@@ -37,7 +37,7 @@ public class Test {
 
 
     @JsonBackReference
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
     @JoinTable(
             name = "test_question",
             joinColumns = @JoinColumn(name = "test_id"),

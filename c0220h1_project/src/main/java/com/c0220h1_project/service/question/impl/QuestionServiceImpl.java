@@ -36,7 +36,7 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionDto convertToQuestionDTO(Question question) {
         QuestionDto questionDto = new QuestionDto();
         questionDto.setQuestionId(question.getQuestionId());
-        questionDto.setQuestion(question.getQuestion());
+        questionDto.setQuestionName(question.getQuestion());
         questionDto.setAnswerA(question.getAnswerA());
         questionDto.setAnswerB(question.getAnswerB());
         questionDto.setAnswerC(question.getAnswerC());
@@ -76,7 +76,7 @@ public class QuestionServiceImpl implements QuestionService {
     public void save(QuestionDto questionDto) {
         Question question = new Question();
         question.setQuestionId(questionDto.getQuestionId());
-        question.setQuestion(questionDto.getQuestion());
+        question.setQuestion(questionDto.getQuestionName());
         question.setAnswerA(questionDto.getAnswerA());
         question.setAnswerB(questionDto.getAnswerB());
         question.setAnswerC(questionDto.getAnswerC());

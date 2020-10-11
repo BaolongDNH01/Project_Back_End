@@ -9,7 +9,7 @@ import java.util.List;
 public interface TestRepository extends JpaRepository<Test, Integer> {
     boolean existsTestByTestName(String name);
 
-    List<Test> findBySubject_SubjectName(String id);
+    List<Test> findBySubject_SubjectName(String name);
     List<Test> findTestsByQuestionsContaining(Question question);
 }
 
